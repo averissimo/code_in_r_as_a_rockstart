@@ -1,0 +1,282 @@
+[
+  {
+    "objectID": "r_as_a_rockstar.html#who-am-i",
+    "href": "r_as_a_rockstar.html#who-am-i",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Who am I?",
+    "text": "Who am I?\n\nPhD from Técnico developing new omics models based on graph structures\nAuthor and maintainer of 📦glmSparseNet and 📦shiny.telemetry\nPart of the core team at 📦teal framework at Roche\nContributor to Pharmaverse and R Consortium Submission working group"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#goal-of-the-presentation",
+    "href": "r_as_a_rockstar.html#goal-of-the-presentation",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Goal of the presentation",
+    "text": "Goal of the presentation\n\n\nLearn some tricks and best practices\nin  development\n\n\nAt the end you will be\nmotivated to develop better code\n\n\nand to write reproducible code/results"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#git-repositories-to-track-code",
+    "href": "r_as_a_rockstar.html#git-repositories-to-track-code",
+    "title": "Code in R like a rockstar 🎸",
+    "section": " git repositories to track code",
+    "text": "git repositories to track code\n\nTricks\n\n\n\n\n\n\n\n\n\n\n\nWith version control you minimize changes of losing work\n\nEven for 1 person projects\n\n Github Education is free for students1\n\nUnlimited private repositories &  Copilot\n\nWe have a  github organization: github.com/sysbiomed\n\n\ngithub.com/education/students"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#renv-to-manage-dependencies",
+    "href": "r_as_a_rockstar.html#renv-to-manage-dependencies",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦renv to manage dependencies",
+    "text": "📦renv to manage dependencies\n\nTricks\n\ninstall.packages(\"renv\")\nrenv::init()     # Initialize the renv enviroment"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#renv-to-manage-dependencies-1",
+    "href": "r_as_a_rockstar.html#renv-to-manage-dependencies-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦renv to manage dependencies",
+    "text": "📦renv to manage dependencies\n\nTricks\n\ninstall.packages(\"renv\")\nrenv::init()     # Initialize the renv enviroment\ninstall.packages(\"dplyr\")\nrenv::install(\"dplyr\")\nrenv::install(\"bioc::glmSparseNet\")\nrenv::install(\"sysbiomed/glmSparseNet\")"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#renv-to-manage-dependencies-2",
+    "href": "r_as_a_rockstar.html#renv-to-manage-dependencies-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦renv to manage dependencies",
+    "text": "📦renv to manage dependencies\n\nTricks\n\ninstall.packages(\"renv\")\nrenv::init()     # Initialize the renv enviroment\ninstall.packages(\"dplyr\")\nrenv::install(\"dplyr\")\nrenv::install(\"bioc::glmSparseNet\")\nrenv::install(\"sysbiomed/glmSparseNet\")\nrenv::snapshot() # to save installed packages & versions lockfile"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#renv-to-manage-dependencies-3",
+    "href": "r_as_a_rockstar.html#renv-to-manage-dependencies-3",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦renv to manage dependencies",
+    "text": "📦renv to manage dependencies\n\nTricks\n\ninstall.packages(\"renv\")\nrenv::init()     # Initialize the renv enviroment\ninstall.packages(\"dplyr\")\nrenv::install(\"dplyr\")\nrenv::install(\"bioc::glmSparseNet\")\nrenv::install(\"sysbiomed/glmSparseNet\")\nrenv::snapshot() # to save installed packages & versions lockfile\nrenv::restore()  # to restore same versions"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#write-readable-code",
+    "href": "r_as_a_rockstar.html#write-readable-code",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Write readable code",
+    "text": "Write readable code\n\nTricks\n\n\nPrefix function calls with package name\n\n\n\n\nlibrary(rsample)\ncar_split &lt;- initial_split(mtcars)\ntrain_data &lt;- training(car_split)\ntest_data &lt;- testing(car_split)\n\n\n\nvs.\n\n\n\ncar_split &lt;- rsample::initial_split(mtcars)\ntrain_data &lt;- rsample::training(car_split)\ntest_data &lt;- rsample::testing(car_split)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#write-readable-code-1",
+    "href": "r_as_a_rockstar.html#write-readable-code-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Write readable code",
+    "text": "Write readable code\n\nTricks\n\n\nUse return early\nAvoid long chunks of code\n\nif (condition) {\n  foo &lt;- bar()\n  foo &lt;- dplyr::filter(zoo %in% whoo)\n} else {\n  return(something)\n}\n\nif (condition2) {\n  stop(\"This is an error)\n}\n\n\n\nvs.\n\n\n\nif (!condition) return(something)\n\nfoo &lt;- bar()\nfoo &lt;- dplyr::filter(zoo %in% whoo)\n\nstopifnot(\"This is an error\" = condition2) # !condition2 && stop(\"This is an error)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#write-readable-code-2",
+    "href": "r_as_a_rockstar.html#write-readable-code-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Write readable code",
+    "text": "Write readable code\n\nTricks\n\n\nUse 📦logger\n\nlogger::log_info(\"This is an info message\")\n\nfoo &lt;- \"evaluated info\"\nlogger::log_layout(logger::layout_glue_colors)\nlogger::log_info(\"This is an {foo} message that sums '1 + 1 = { 1 + 1 }'\")\nlogger::log_error(\"This is an error message\")\nlogger::log_warn(\"This is an warning message\")"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#pipe-operator",
+    "href": "r_as_a_rockstar.html#pipe-operator",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "|> Pipe operator",
+    "text": "|&gt; Pipe operator\n\nBase \n\n\nPipe a value into a call expression or a function expression.\n\n\n\n\nLet’s create a trail of function calls\n\ntail(head(sort(scale(mtcars$mpg)), 16), 16)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738\n\n\n\n\n\nSame, but with pipes\n\nmtcars$mpg |&gt; scale() |&gt; sort() |&gt; head(16) |&gt; tail(16)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#pipe-operator-1",
+    "href": "r_as_a_rockstar.html#pipe-operator-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "|> Pipe operator",
+    "text": "|&gt; Pipe operator\n\nBase \n\nLet’s create a trail of function calls\n\ntail(\n  head(\n    sort(\n      scale(mtcars$mpg)\n    ), \n    16), \n  16\n)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738\n\n\n\n\n\nSame, but with pipes\n\nmtcars$mpg |&gt; \n  scale() |&gt; \n  sort() |&gt; \n  head(16) |&gt; \n  tail(16)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#pipe-operator-2",
+    "href": "r_as_a_rockstar.html#pipe-operator-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "|> Pipe operator",
+    "text": "|&gt; Pipe operator\n\nBase \n\n\nLet’s create a trail of function calls\n\ntail(\n  head(\n    sort(\n      scale(mtcars$mpg)\n    ), \n    16), \n  16\n)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738\n\n\n\n\n\n\n\nSame, but with pipes\n\nmtcars$mpg |&gt; \n  scale() |&gt; \n  sort() |&gt; \n  head(16) |&gt; \n  tail(16)\n\n [1] -1.6078826 -1.6078826 -1.1267104 -0.9607889 -0.8944204 -0.8446439\n [7] -0.8114596 -0.8114596 -0.7616832 -0.7119067 -0.6123539 -0.4630246\n[13] -0.3800638 -0.3302874 -0.2307345 -0.1477738"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#pipe-operator-3",
+    "href": "r_as_a_rockstar.html#pipe-operator-3",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "|> Pipe operator",
+    "text": "|&gt; Pipe operator\n\nBase \n\n\nYou can use it on other arguments of a function\n\nAs long as they are named\n\n\nThis feeds the string to the wrong argument\n\n\"a text with 1234 and 5678\" |&gt; grepl(\"[0-9]+\")        # ❌\n\n[1] FALSE\n\n\n\n\n\n\nFeeds to x argument\n\n\"a text with 1234 and 5678\" |&gt; grepl(\"[0-9]+\", x = _) # ✅\n\n[1] TRUE\n\n\n\n\n\n\n\ngrepl() usage if you do not know by heart\n\nformals(grepl) |&gt;                                  # Named list of arguments with defaults\n  names() |&gt;                                       # Gets the names\n  paste(collapse = \", \") |&gt;                        # Collapse names into comma separated string\n  glue::glue(\"usage: grepl({params})\", params = _) # Creates usage string\n\nusage: grepl(pattern, x, ignore.case, perl, fixed, useBytes)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#null-coalesce-operator",
+    "href": "r_as_a_rockstar.html#null-coalesce-operator",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "%||% Null Coalesce operator",
+    "text": "%||% Null Coalesce operator\n\nBase \n\nfoo &lt;- NULL\nbar &lt;- if (is.null(foo)) {\n  0\n} else {\n  foo\n}\nbar &lt;- bar + 1\nbar\n\n\n[1] 1\n\n\n\n\n\nvs.\n\n\n\nfoo &lt;- NULL\nbar &lt;- foo %||% 0 + 1\nbar\n\n\n[1] 1"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#sapply-vapply",
+    "href": "r_as_a_rockstar.html#sapply-vapply",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "sapply() / vapply() / …",
+    "text": "sapply() / vapply() / …\n\nBase \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nx_long &lt;- rep(x, 1000)\n\nf &lt;- \\(x_long) {\n  result &lt;- c()\n  for (.x in x_long) result &lt;- c(result, mean(.x))\n  setNames(result, names(x_long))\n}\ns &lt;- \\(x_long) sapply(x_long, mean)\nv &lt;- \\(x_long) vapply(x_long, mean, numeric(1L))\n\nbench::mark(\n  \"for\" = f(x_long), \"sapply\" = s(x_long), \"vapply\" = v(x_long)\n)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#mclapply",
+    "href": "r_as_a_rockstar.html#mclapply",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "mclapply()",
+    "text": "mclapply()\nWhen using lapply() or sapply() on large datasets, you can use mclapply() to parallelize the process.\n\nlibrary(parallel)\n\nm &lt;- \\(x_long) mclapply(\n  x_long,\n  mean,\n  mc.cores = 4,\n  mc.preschedule = TRUE # 4 cores running each 1/4 of the input\n                        # vs. FALSE where 1 fork is created for each input\n)\n\nx_long &lt;- rep(x, 30000) # let's make it worth it\nbench::mark(\n  \"for\" = f(x_long), \"sapply\" = s(x_long), \"vapply\" = v(x_long), \"mclapply\" = m(x_long), memory = FALSE, check = FALSE\n)\n\n# A tibble: 4 × 6\n  expression      min   median `itr/sec` mem_alloc `gc/sec`\n  &lt;bch:expr&gt; &lt;bch:tm&gt; &lt;bch:tm&gt;     &lt;dbl&gt; &lt;bch:byt&gt;    &lt;dbl&gt;\n1 for           7.89s    7.89s     0.127        NA     93.0\n2 sapply     274.94ms 285.42ms     3.50         NA     17.5\n3 vapply     279.74ms 281.36ms     3.55         NA     16.0\n4 mclapply   141.07ms  161.6ms     6.15         NA     38.4\n\n\n\nBase"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#reduce-filter",
+    "href": "r_as_a_rockstar.html#reduce-filter",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Reduce() / Filter()",
+    "text": "Reduce() / Filter()\n\nBase \n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nKeep an eye in a few slides for 📦purrr that has similar functions"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#local",
+    "href": "r_as_a_rockstar.html#local",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "local()",
+    "text": "local()\n\nUseful for when you create a lot of intermediate variables that are never necessary.\n\n\n\n\n\n\n\n\n\nBase \n\n\n &lt;&lt;- allows to write to parent environment (use with care)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#dplyr",
+    "href": "r_as_a_rockstar.html#dplyr",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦dplyr",
+    "text": "📦dplyr\n\ntidyverse\n\n\n\nA grammar of data manipulation\n\n\n\n\n\n\n\n\n\n\n 📦dplyr is an acceptable exception to the practice of prefixing function calls with package name.\n\n\n\n\n\n\nManual approach\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe same with stats::ave()\n\n\n\n\n\n\n\n\n\n\n\n\n\nThe same in data.tables"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#tidyr",
+    "href": "r_as_a_rockstar.html#tidyr",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦tidyr",
+    "text": "📦tidyr\n\ntidyverse\n\n\n\nOriginal data\n\n#\n#\n#\n#\ntidyr::relig_income |&gt; \n  print(width = 50, n = 10)\n\n# A tibble: 18 × 11\n   religion  `&lt;$10k` `$10-20k` `$20-30k` `$30-40k`\n   &lt;chr&gt;       &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;\n 1 Agnostic       27        34        60        81\n 2 Atheist        12        27        37        52\n 3 Buddhist       27        21        30        34\n 4 Catholic      418       617       732       670\n 5 Don’t kn…      15        14        15        11\n 6 Evangeli…     575       869      1064       982\n 7 Hindu           1         9         7         9\n 8 Historic…     228       244       236       238\n 9 Jehovah'…      20        27        24        24\n10 Jewish         19        19        25        25\n# ℹ 8 more rows\n# ℹ 6 more variables: `$40-50k` &lt;dbl&gt;,\n#   `$50-75k` &lt;dbl&gt;, `$75-100k` &lt;dbl&gt;,\n#   `$100-150k` &lt;dbl&gt;, `&gt;150k` &lt;dbl&gt;,\n#   `Don't know/refused` &lt;dbl&gt;\n\n\n\ntidyr::pivot_longer()\n\ntidyr::relig_income |&gt;\n  tidyr::pivot_longer(\n    !religion, \n    names_to = \"income\",  \n    values_to = \"count\"\n  )\n\n# A tibble: 180 × 3\n   religion income             count\n   &lt;chr&gt;    &lt;chr&gt;              &lt;dbl&gt;\n 1 Agnostic &lt;$10k                 27\n 2 Agnostic $10-20k               34\n 3 Agnostic $20-30k               60\n 4 Agnostic $30-40k               81\n 5 Agnostic $40-50k               76\n 6 Agnostic $50-75k              137\n 7 Agnostic $75-100k             122\n 8 Agnostic $100-150k            109\n 9 Agnostic &gt;150k                 84\n10 Agnostic Don't know/refused    96\n# ℹ 170 more rows"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#tidyr-1",
+    "href": "r_as_a_rockstar.html#tidyr-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦tidyr",
+    "text": "📦tidyr\n\ntidyverse\n\n\n\nOriginal data\n\n#\n#\ntidyr::fish_encounters\n\n# A tibble: 114 × 3\n   fish  station  seen\n   &lt;fct&gt; &lt;fct&gt;   &lt;int&gt;\n 1 4842  Release     1\n 2 4842  I80_1       1\n 3 4842  Lisbon      1\n 4 4842  Rstr        1\n 5 4842  Base_TD     1\n 6 4842  BCE         1\n 7 4842  BCW         1\n 8 4842  BCE2        1\n 9 4842  BCW2        1\n10 4842  MAE         1\n# ℹ 104 more rows\n\n\n\ntidyr::pivot_wider()\n\ntidyr::fish_encounters |&gt; \n  tidyr::pivot_wider(names_from = station, values_from = seen) |&gt;\n  print(width = 60, n = 10)\n\n# A tibble: 19 × 12\n   fish  Release I80_1 Lisbon  Rstr Base_TD   BCE   BCW\n   &lt;fct&gt;   &lt;int&gt; &lt;int&gt;  &lt;int&gt; &lt;int&gt;   &lt;int&gt; &lt;int&gt; &lt;int&gt;\n 1 4842        1     1      1     1       1     1     1\n 2 4843        1     1      1     1       1     1     1\n 3 4844        1     1      1     1       1     1     1\n 4 4845        1     1      1     1       1    NA    NA\n 5 4847        1     1      1    NA      NA    NA    NA\n 6 4848        1     1      1     1      NA    NA    NA\n 7 4849        1     1     NA    NA      NA    NA    NA\n 8 4850        1     1     NA     1       1     1     1\n 9 4851        1     1     NA    NA      NA    NA    NA\n10 4854        1     1     NA    NA      NA    NA    NA\n# ℹ 9 more rows\n# ℹ 4 more variables: BCE2 &lt;int&gt;, BCW2 &lt;int&gt;, MAE &lt;int&gt;,\n#   MAW &lt;int&gt;"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#purrr",
+    "href": "r_as_a_rockstar.html#purrr",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦purrr",
+    "text": "📦purrr\n\ntidyverse\n\n\n\npurrr::pluck(list(a = list(b = 2)), \"a\", \"b\")\n\n[1] 2\n\n\n\n\n\npurrr::pluck(list(c = 3), \"foo\")\n\nNULL\n\n\n\n\n\npurrr::pluck(list(c = 3), \"foo\", .default = 0)\n\n[1] 0\n\n\n\n\n\npurrr::keep(1:10, ~.x &lt; 5) # keep values below 5\n\n[1] 1 2 3 4\n\n\n\n\n\npurrr::discard(1:10, ~.x &gt;= 5) # discard values above 5\n\n[1] 1 2 3 4\n\n\n\n\n\nlist(1, 2, 3, NULL, 4, NULL) |&gt; paste(collapse = \", \")\n\n[1] \"1, 2, 3, NULL, 4, NULL\"\n\npurrr::compact(list(1, 2, 3, NULL, 4, NULL)) |&gt; paste(collapse = \", \") # remove NULL values\n\n[1] \"1, 2, 3, 4\""
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#glue",
+    "href": "r_as_a_rockstar.html#glue",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦glue",
+    "text": "📦glue\n\ntidyverse\n\n\n\nEasy function to generate strings\n\nglue() has access to the environment and can evaluate expressions\n\ntitle &lt;- \"Code in R like a rockstar 🎸\"\nglue::glue(\"The current time is {Sys.time()}\\n  and the title of this presentation is: '{title}'\")\n\nThe current time is 2025-04-22 15:52:25.63675\nand the title of this presentation is: 'Code in R like a rockstar 🎸'\n\n\n\n\n\nData can come from other sources, such as a dataframe (a list or an environment)\n\nhead(mtcars, n = 3) |&gt;\n  tibble::rownames_to_column(var = \"model\") |&gt; \n  glue::glue_data(\"{model} has {hp} hp.\")\n\nMazda RX4 has 110 hp.\nMazda RX4 Wag has 110 hp.\nDatsun 710 has 93 hp.\n\n\n\n when going for efficient code, use sprintf()\nCan be used with dplyr::mutate() as well as other tidyverse packages"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#ggplot2-source-gist",
+    "href": "r_as_a_rockstar.html#ggplot2-source-gist",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦ggplot2 (source gist)",
+    "text": "📦ggplot2 (source gist)\n{.absolute left=0 right=0 top=40 style=“margin: auto auto; }"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#ggplot2",
+    "href": "r_as_a_rockstar.html#ggplot2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦ggplot2",
+    "text": "📦ggplot2"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-1",
+    "href": "r_as_a_rockstar.html#memoise-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\n\nLet’s:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\n\n\n\n\n# Auxiliary function to generate x and y from a split\ngen_x_y &lt;- \\(fun, split, dat = fun(split)) list(\n  x = model.matrix(surv_obj ~ age + sex + ph_ecog + wt_loss, data = dat)[, -1],\n  y = dat$surv_obj\n)\n\ncache &lt;- cachem::cache_disk(\"cache\") # Use local disk cache (tweak `max_size` for your needs)\n\n#\n# Build data\nlung &lt;- na.omit(survival::lung) |&gt;\n  dplyr::mutate(\n    .keep = \"none\",\n    surv_obj = survival::Surv(time, status == 2),\n    event = status == 2, age, sex = factor(sex), ph_ecog = factor(ph.ecog),\n    wt_loss = wt.loss\n  )\n  \ncv_model &lt;- memoise::memoise(glmnet::cv.glmnet)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-2",
+    "href": "r_as_a_rockstar.html#memoise-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\nLet’s:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\n\n\n\n\nsplit &lt;- rsample::initial_split(lung, prop = 0.8, strata = \"event\")\nlung_train &lt;- gen_x_y(rsample::training, split)\ncvfit &lt;- cv_model(lung_train$x, lung_train$y, family = \"cox\") # fit model"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-3",
+    "href": "r_as_a_rockstar.html#memoise-3",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\nLet’s:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\n\n\n\n\nlung_test &lt;- gen_x_y(rsample::testing, split)\nset.seed(seed * 42) # Just in case\ntryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group\n  cvfit |&gt; \n    stats::predict(newx = lung_test$x, s = \"lambda.min\", type = \"link\") |&gt; \n    dplyr::tibble(risk_score = _, y = lung_test$y) |&gt; \n    dplyr::mutate(risk_group = dplyr::if_else(risk_score &gt; median(risk_score), \"high\", \"low\")) |&gt; \n    dplyr::select(-risk_score) |&gt; \n    survival::survdiff(y ~ risk_group, data = _) |&gt; \n    .subset2(\"pvalue\"),\n  error = \\(e) 1 # In case there is only 1 group\n)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-4",
+    "href": "r_as_a_rockstar.html#memoise-4",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\nLet’s:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\n\n\n\n\nlung_test &lt;- gen_x_y(rsample::testing, split)\nset.seed(seed * 42) # Just in case\ntryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group\n  cvfit |&gt; \n    stats::predict(newx = lung_test$x, s = \"lambda.min\", type = \"link\") |&gt; \n    dplyr::tibble(risk_score = _, y = lung_test$y) |&gt; \n    dplyr::mutate(risk_group = dplyr::if_else(risk_score &gt; median(risk_score), \"high\", \"low\")) |&gt; \n    dplyr::select(-risk_score) |&gt; \n    survival::survdiff(y ~ risk_group, data = _) |&gt; \n    purrr::pluck(\"pvalue\"),\n  error = \\(e) 1 # In case there is only 1 group\n)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-5",
+    "href": "r_as_a_rockstar.html#memoise-5",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\n\n\nLet’s:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\n\n\n\n\ntictoc::tic(tic_str)\np_values &lt;- vapply(\n  seq_len(200),\n  \\(seed) {\n    # code\n  },\n  numeric(1L)\n)\ntictoc::toc()\n\n\ntictoc::tic(tic_str)\np_values &lt;- vapply(\n  seq_len(200),\n  \\(seed) {\n    set.seed(seed)\n    # Split the data in 80% training / 20% testing\n    split &lt;- rsample::initial_split(lung, prop = 0.8, strata = \"event\")\n    lung_train &lt;- gen_x_y(rsample::training, split)\n    cvfit &lt;- cv_model(lung_train$x, lung_train$y, family = \"cox\") # fit model\n    \n    lung_test &lt;- gen_x_y(rsample::testing, split)\n    set.seed(seed * 42) # Just in case\n    tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group\n      cvfit |&gt; \n        stats::predict(newx = lung_test$x, s = \"lambda.min\", type = \"link\") |&gt; \n        dplyr::tibble(risk_score = _, y = lung_test$y) |&gt; \n        dplyr::mutate(risk_group = dplyr::if_else(risk_score &gt; median(risk_score), \"high\", \"low\")) |&gt; \n        dplyr::select(-risk_score) |&gt; \n        survival::survdiff(y ~ risk_group, data = _) |&gt; \n        purrr::pluck(\"pvalue\"),\n      error = \\(e) 1 # In case there is only 1 group\n    )\n  },\n  FUN.VALUE = double(1L)\n) |&gt; \n  sort() |&gt; \n  dplyr::tibble(p_value = _) |&gt; \n  dplyr::mutate(cdf = seq_along(p_value) / length(p_value))\ntictoc::toc()"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-6",
+    "href": "r_as_a_rockstar.html#memoise-6",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\n\nExample below will:\n\nBuild lung survival data\nTrain model on 80% of the data\nTest on the remaining 20%\nRun logrank test and calculate p_value\n\nRepeat 100\nPlot results\n\n\n\n\n#\n# Nice cumulative distribution plot\np_values |&gt;\n  dplyr::mutate(\n    max_significant = p_value == max(p_value[p_value &lt;= 0.05]),\n    label = dplyr::if_else(max_significant, glue::glue(\"y = {cdf} / p_value = {round(p_value, 5)}\"), NA_character_),\n    yintercept = dplyr::if_else(max_significant, cdf, NA),\n  ) |&gt;\n  ggplot2::ggplot(ggplot2::aes(x = p_value, y = cdf, label = label)) +\n    ggplot2::geom_line(color = \"blue\") +\n    ggplot2::geom_ribbon(ggplot2::aes(ymin = 0, ymax = cdf), alpha = 0.1) +\n    ggplot2::geom_vline(xintercept = 0.05, linetype = \"dashed\", color = \"red\") +\n    ggplot2::geom_hline(ggplot2::aes(yintercept = yintercept), na.rm = TRUE, linetype = \"dashed\", color = \"gray\") +\n    ggplot2::geom_label(nudge_x = .05, nudge_y = -.05, hjust = 0, na.rm = TRUE, fill = \"white\") +\n    ggplot2::labs(title = \"Cumulative Distribution of p-values\",\n         x = \"p-value\",\n         y = \"Empirical CDF\") +\n    ggplot2::expand_limits(x = c(0, 1), y = c(0, 1)) +\n    ggplot2::theme_minimal()"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#memoise-7",
+    "href": "r_as_a_rockstar.html#memoise-7",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "📦memoise",
+    "text": "📦memoise\n\n\nfull run: 10.761 sec elapsed\n\n\nmemoise run: 3.052 sec elapsed"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#powerful-reports-presentations",
+    "href": "r_as_a_rockstar.html#powerful-reports-presentations",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Powerful reports & presentations",
+    "text": "Powerful reports & presentations\n\nGreat tools to communicate results\nYou can use it to generate reproducible results\n\nparams: property in rmarkdown title\nrmarkdown::render()"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#powerful-reports-presentations-1",
+    "href": "r_as_a_rockstar.html#powerful-reports-presentations-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Powerful reports & presentations",
+    "text": "Powerful reports & presentations\n\nGreat tools to communicate results\nYou can use it to generate reproducible results\n\nparams: property in rmarkdown title\n\n---\ntitle: \"Network-based models\"\noutput: html_document\nparams:\n  seed: 2024\n  prop: 0.8\n  folds: 10\n  # ...\n---\n\n# then use `params$&lt;name&gt; in code\nset.seed(params$seed)\n\nrmarkdown::render()"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#powerful-reports-presentations-2",
+    "href": "r_as_a_rockstar.html#powerful-reports-presentations-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Powerful reports & presentations",
+    "text": "Powerful reports & presentations\n\nGreat tools to communicate results\nYou can use it to generate reproducible results\n\nparams: property in rmarkdown title\nrmarkdown::render() \n\nprops &lt;- c(.8, .7)\nfolds &lt;- c(10, 5)\nseed &lt;- 2025 + seq_len(10)\n\ndir.create(\"Results/reports\", showWarnings = FALSE)\npurrr::walk(seed, \\(s)\n  purrr::walk(props, \\(x) \n    purrr::walk(folds, \\(y) \n      rmarkdown::render(\n        \"network.Rmd\", \n        output_file = glue::glue(\"Results/reports/network_{s}_{x}_{y}.html\"), \n        params = list(props = x, folds = y, seed = s))\n    )\n  )\n)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#powerful-reports-presentations-3",
+    "href": "r_as_a_rockstar.html#powerful-reports-presentations-3",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Powerful reports & presentations",
+    "text": "Powerful reports & presentations\nAdd to the end of an Rmarkdown:\n## Add to end of chunk\nlist(results = list()) |&gt; as.environment()            # Boilerplate\nresults_path &lt;- here::here(\"results_rmarkdown.RData\") # Path to save\nif (file.exists(results_path)) load(results_path, envir = env) # Load if exists\n\nenv$results[[length(env$results) + 1]] &lt;- list( # Add new result\n  params = params,   # Params from rmarkdown\n  date= Sys.time()   # Current time (in case you want to filter)\n  result = a_result, # A result\n  model = a_model    # Any other objects you want to save\n)\n\nsave(\"results\", file = results_path, envir = env)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#alternatives-to-source",
+    "href": "r_as_a_rockstar.html#alternatives-to-source",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Alternatives to source()",
+    "text": "Alternatives to source()\n\n📦box is a package that allows to import functions from other scripts\n\nit encapsulates the code in separate environments\n\n#' @export\nfun &lt;- function(a, b) a + b\n\n\n\nKinda like source(...) but it doesn’t run anything in the current environment\n\nbox::use(mod/another[...])\n\nfun(1, 2)\n\n\n\nThe file can be loaded and then used with its name &lt;filename&gt;$&lt;fun_name&gt;\n\nbox::use(mod/another)\n\nanother$fun(1, 2)\n\n\n\nWe can only import some functions\n\nbox::use(mod/another[fun])\n\nfun(1, 2)"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#alternatives-to-source-1",
+    "href": "r_as_a_rockstar.html#alternatives-to-source-1",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Alternatives to source()",
+    "text": "Alternatives to source()\nThe real power comes from the restricted scope it can operate in.\n\n# 📄 mod/another.R\na_variable &lt;- 1\n\n#' @export\nlog &lt;- function (msg) {\n  box::use(glue[glue])\n  # We can now use `glue` inside the function:\n  message(glue(.sep = \" \", \"[LOG MESSAGE]\", msg, .envir = parent.frame()))\n}\n\na_variable is not overwritten\n\n# 📄 report.Rmd\na_variable &lt;- 2\nbox::use(mod/another)\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 2\n\n\nWhile with source() it is\n\n# 📄 report.Rmd\na_variable &lt;- 2\nsource(\"mod/another.R\")\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 1"
+  },
+  {
+    "objectID": "r_as_a_rockstar.html#alternatives-to-source-2",
+    "href": "r_as_a_rockstar.html#alternatives-to-source-2",
+    "title": "Code in R like a rockstar 🎸",
+    "section": "Alternatives to source()",
+    "text": "Alternatives to source()\n\n\n\nCreate your own R package\n  (let’s try a live demo if we have time)"
+  }
+]
