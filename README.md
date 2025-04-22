@@ -1,1 +1,3 @@
-# code_in_r_as_a_rockstart
+# Code in R as a rockstar
+
+April 22^nd, 2025
