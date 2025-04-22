@@ -1,5 +1,7 @@
 ---
 title: "Code in R like a rockstar 🎸"
+author: André Veríssimo, Ph.D.
+date: April 22, 2025
 engine: knitr
 webr:  
   packages:
