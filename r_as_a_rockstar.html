@@ -13,6 +13,8 @@
 <link href="site_libs/quarto-contrib/fontawesome6-1.2.0/latex-fontsize.css" rel="stylesheet"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.6.42">
 
+  <meta name="author" content="André Veríssimo, Ph.D.">
+  <meta name="dcterms.date" content="2025-04-22">
   <title>r_as_a_rockstar – Code in R like a rockstar 🎸</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -208,10 +210,20 @@
 
 <section id="title-slide" class="quarto-title-block">
   <h1 class="title">Code in R like a rockstar 🎸</h1>
+  <p class="subtitle">&nbsp;</p>
 
 <div class="quarto-title-authors">
+<div class="quarto-title-author">
+<div class="quarto-title-author-name">
+André Veríssimo, Ph.D. 
+</div>
+        <p class="quarto-title-affiliation">
+            <br>Systems Biomedicine Research Group<br>INESC-ID · Técnico Lisboa
+          </p>
+    </div>
 </div>
 
+  <p class="date">2025-04-22</p>
 </section>
 <section id="who-am-i" class="slide level2">
 <h2>Who am I?</h2>
@@ -219,7 +231,7 @@
 <li><p>PhD from Técnico developing new omics models based on graph structures</p></li>
 <li><p>Author and maintainer of <code>📦glmSparseNet</code> and <code>📦shiny.telemetry</code></p></li>
 <li><p>Part of the core team at <code>📦teal</code> framework at Roche</p></li>
-<li><p>Contributor to <strong><span class="highlight">Pharmaverse</span></strong> and <strong><span class="highlight">R Consortium Submission working group</span></strong></p></li>
+<li><p>Contributor to <span class="highlight"><strong>Pharmaverse</strong></span> and <span class="highlight"><strong>R Consortium Submission working group</strong></span></p></li>
 </ul>
 </section>
 <section id="goal-of-the-presentation" class="slide level2">
@@ -227,7 +239,7 @@
 <div style="text-align: center;">
 <div style="margin-top: 100px">
 <p>Learn some tricks and <span class="highlight"><strong>best practices</strong></span><br>
-<span class="highlight"><strong>in <i class="fa-brands fa-r-project" aria-label="r-project"></i> development</strong></span></p>
+<span class="highlight"><strong>in {{</strong><fa brands="" r-project="">}} development</fa></span></p>
 </div>
 <div style="margin-top: 50px;">
 <p>At the end you will be<br>
@@ -277,7 +289,7 @@
 <p><i class="fa-solid fa-circle-info" aria-label="circle-info"></i> Advance R is a great book by Hadley. Visit <a href="adv-r.hadley.nz">adv-r.hadley.nz</a> to go much deeper.</p>
 </div></aside></section>
 <section id="git-repositories-to-track-code" class="slide level2 smaller" data-background-color="#3b1200">
-<h2><em><i class="fa-solid fa-code-branch" aria-label="code-branch"></i> git</em> repositories to track code</h2>
+<h2><i class="fa-solid fa-code-branch" aria-label="code-branch"></i> <em>git</em> repositories to track code</h2>
 <div class="footer">
 <p><span class="small-caps">Tricks</span></p>
 </div>
@@ -439,7 +451,7 @@
 <ul>
 <li><code>|&gt;</code> Pipe operator
 <ul>
-<li>shortcut in rstudio: <em><span class="highlight-soft">ctrl + shift + m</span></em></li>
+<li>shortcut in rstudio: <span class="highlight-soft"><em>ctrl + shift + m</em></span></li>
 </ul></li>
 <li><code>%||%</code></li>
 <li><code>sapply</code> <em>vs.</em> <code>for (x in z) { ... }</code></li>
@@ -680,7 +692,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoicmVzdWx0IDwtIHNhcHBseSh4
 </div>
 </div>
 <div class="fragment">
-<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource .r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>x_long <span class="ot">&lt;-</span> <span class="fu">rep</span>(x, <span class="dv">1000</span>)</span>
+<div class="sourceCode" id="cb34"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a></a>x_long <span class="ot">&lt;-</span> <span class="fu">rep</span>(x, <span class="dv">1000</span>)</span>
 <span id="cb34-2"><a></a></span>
 <span id="cb34-3"><a></a>f <span class="ot">&lt;-</span> \(x_long) {</span>
 <span id="cb34-4"><a></a>  result <span class="ot">&lt;-</span> <span class="fu">c</span>()</span>
@@ -1049,7 +1061,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShkYXRhLnRhYmxl
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>title <span class="ot">&lt;-</span> <span class="st">"Code in R like a rockstar 🎸"</span></span>
 <span id="cb59-2"><a></a>glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"The current time is {Sys.time()}</span><span class="sc">\n</span><span class="st">  and the title of this presentation is: '{title}'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The current time is 2025-04-22 15:52:25.63675
+<pre><code>The current time is 2025-04-22 16:06:05.648372
 and the title of this presentation is: 'Code in R like a rockstar 🎸'</code></pre>
 </div>
 </div>
@@ -1083,7 +1095,7 @@ Can be used with <code>dplyr::mutate()</code> as well as other tidyverse package
 <section id="memoise" class="title-slide slide level1 smaller scrollable">
 <h1><code>📦memoise</code></h1>
 <blockquote>
-<p>Memoisation is an <strong><span class="highlight">optimization technique to speed up computer programs by storing the results of expensive function calls</span></strong> and returning the cached result when the same inputs occur again</p>
+<p>Memoisation is an <span class="highlight"><strong>optimization technique to speed up computer programs by storing the results of expensive function calls</strong></span> and returning the cached result when the same inputs occur again</p>
 </blockquote>
 <div class="cell" data-autorun="true">
 <div>
@@ -1337,8 +1349,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 <section id="powerful-reports-presentations-1" class="slide level2 smaller" data-auto-animate="true" data-background-color="#152330">
 <h2 data-id="quarto-animate-title">Powerful reports &amp; presentations</h2>
 <ul>
-<li>Great tools to communicate results</li>
-<li>You can use it to generate reproducible results
+<li><p>Great tools to communicate results</p></li>
+<li><p>You can use it to generate reproducible results</p>
 <ul>
 <li><code>params:</code> property in rmarkdown title</li>
 </ul>
@@ -1362,8 +1374,8 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 <section id="powerful-reports-presentations-2" class="slide level2 smaller" data-auto-animate="true" data-background-color="#152330">
 <h2 data-id="quarto-animate-title">Powerful reports &amp; presentations</h2>
 <ul>
-<li>Great tools to communicate results</li>
-<li>You can use it to generate reproducible results
+<li><p>Great tools to communicate results</p></li>
+<li><p>You can use it to generate reproducible results</p>
 <ul>
 <li><code>params:</code> property in rmarkdown title</li>
 <li><code>rmarkdown::render()</code> <i class="fa-solid fa-hat-wizard" aria-label="hat-wizard"></i></li>
@@ -1417,7 +1429,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 <div style="margin-top: 50px;">
 
 </div>
-<p><strong><span class="highlight">If you really need</span></strong>, use relative paths:</p>
+<p><span class="highlight"><strong>If you really need</strong></span>, use relative paths:</p>
 <ul>
 <li><code>here::here("./another.R")</code> <em>(in current directory)</em></li>
 <li><code>here::here("../something.R")</code> <em>(in parent directory)</em></li>
