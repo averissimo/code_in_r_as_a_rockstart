@@ -5,3 +5,9 @@
 
 /.quarto/
 /_site/
+cache/
+memoise/
+docs/
+r_as_a_rockstar_cache/
+r_as_a_rockstar_files/
+*.RData

@@ -1,0 +1,125 @@
+---
+title: "report"
+output: html_document
+params:
+  seed: 2025
+  replicates: 200
+  props: 0.8
+  folds: 10
+  results_file: !r here::here("results", "results_rmarkdown.RData")
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+logger::log_layout(logger::layout_glue_colors)
+dir.create(here::here("results"), showWarnings = FALSE) # Create results dir if it doesn't exist
+```
+
+
+```{r render, include=FALSE, eval=FALSE}
+props <- c(.8, .7)
+seed <- c(2025, 2026)
+folds <- c(10, 5)
+
+dir_prefix <- here::here("results", "reports")
+dir.create(dir_prefix, showWarnings = FALSE)
+purrr::walk(seed, \(.seed)
+  purrr::walk(props, \(.prop) 
+    purrr::walk(folds, \(.folds) 
+      rmarkdown::render(
+        here::here("vignettes", "report.Rmd"), 
+        output_file = here::here(
+          dir_prefix,
+          glue::glue("network_{.seed}_{.prop}_{.folds}.html")
+        ), 
+        params = list(props = .prop, folds = .folds, seed = .seed))
+    )
+  )
+)
+```
+
+## Load package
+
+```{r load}
+devtools::load_all() # Shortcut in rstudio: Ctrl + Shift + L 
+                     # After devtools is installed and rstudio restarted
+```
+
+## Prepare data
+
+```{r data}
+cache <- cachem::cache_disk(here::here("memoise_cache")) # Use local disk cache (tweak `max_size` for your needs)
+
+#
+# Build data
+lung <- na.omit(survival::lung) |>
+  dplyr::mutate(
+    .keep = "none",
+    surv_obj = survival::Surv(time, status == 2),
+    event = status == 2, age, sex = factor(sex), ph_ecog = factor(ph.ecog),
+    wt_loss = wt.loss
+  )
+
+#
+# Mode to use
+cv_model <- memoise::memoise(glmnet::cv.glmnet, cache = cache)
+```
+
+## Calculate p-values
+
+```{r p_values}
+tictoc::tic()
+p_values <- vapply(
+  X = params$seed + seq_len(params$replicates), 
+  FUN = calculate_model, # defined in R/calculate_model.R
+  FUN.VALUE = double(1L),
+  # Extra parameters for calculate_model
+  data = lung, 
+  prop = params$props,
+  nfolds = params$folds,
+  model_fun = cv_model
+) |> 
+  sort() |> 
+  dplyr::tibble(p_value = _) |> 
+  dplyr::mutate(cdf = seq_along(p_value) / length(p_value))
+tictoc::toc()
+```
+
+## Plot
+
+```{r plot}
+p_values |>
+  dplyr::mutate(
+    max_significant = p_value == max(p_value[p_value <= 0.05]),
+    label = dplyr::if_else(max_significant, glue::glue("y = {cdf} / p_value = {round(p_value, 5)}"), NA_character_),
+    yintercept = dplyr::if_else(max_significant, cdf, NA),
+  ) |>
+  ggplot2::ggplot(ggplot2::aes(x = p_value, y = cdf, label = label)) +
+    ggplot2::geom_line(color = "blue") +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = 0, ymax = cdf), alpha = 0.1) +
+    ggplot2::geom_vline(xintercept = 0.05, linetype = "dashed", color = "red") +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = yintercept), na.rm = TRUE, linetype = "dashed", color = "gray") +
+    ggplot2::geom_label(nudge_x = .05, nudge_y = -.05, hjust = 0, na.rm = TRUE, fill = "white") +
+    ggplot2::labs(title = "Cumulative Distribution of p-values",
+         x = "p-value",
+         y = "Empirical CDF") +
+    ggplot2::expand_limits(x = c(0, 1), y = c(0, 1)) +
+    ggplot2::theme_minimal()
+```
+
+```{r, echo=FALSE}
+env <- list(results = list()) |> as.environment()            # Boilerplate
+if (file.exists(params$results_file)) load(params$results_file, envir = env) # Load if exists
+
+hashed_name <- glue::glue("r_{rlang::hash(params)}") # Hash params to use as name (overrides, in case of duplicates)
+
+env$results[[hashed_name]] <- list( # Add new result
+  params = params,   # Params from rmarkdown
+  date= Sys.time(),   # Current time (in case you want to filter)
+  p_values = p_values
+)
+
+save("results", file = params$results_file, envir = env)
+logger::log_info("Saved results to file: {params$results_file}")
+```
+
