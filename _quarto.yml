@@ -1,5 +1,6 @@
 project:
   title: "r_as_a_rockstar"
+  output-dir: docs
 
 editor: visual
 
