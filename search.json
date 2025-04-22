@@ -11,7 +11,7 @@
     "href": "r_as_a_rockstar.html#goal-of-the-presentation",
     "title": "Code in R like a rockstar 🎸",
     "section": "Goal of the presentation",
-    "text": "Goal of the presentation\n\n\nLearn some tricks and best practices\nin {{}} development\n\n\nAt the end you will be\nmotivated to develop better code\n\n\nand to write reproducible code/results"
+    "text": "Goal of the presentation\n\n\nLearn some tricks and best practices\nin  development\n\n\nAt the end you will be\nmotivated to develop better code\n\n\nand to write reproducible code/results"
   },
   {
     "objectID": "r_as_a_rockstar.html#git-repositories-to-track-code",
@@ -165,7 +165,7 @@
     "href": "r_as_a_rockstar.html#glue",
     "title": "Code in R like a rockstar 🎸",
     "section": "📦glue",
-    "text": "📦glue\n\ntidyverse\n\n\n\nEasy function to generate strings\n\nglue() has access to the environment and can evaluate expressions\n\ntitle &lt;- \"Code in R like a rockstar 🎸\"\nglue::glue(\"The current time is {Sys.time()}\\n  and the title of this presentation is: '{title}'\")\n\nThe current time is 2025-04-22 17:11:55.099358\nand the title of this presentation is: 'Code in R like a rockstar 🎸'\n\n\n\n\n\nData can come from other sources, such as a dataframe (a list or an environment)\n\nhead(mtcars, n = 3) |&gt;\n  tibble::rownames_to_column(var = \"model\") |&gt; \n  glue::glue_data(\"{model} has {hp} hp.\")\n\nMazda RX4 has 110 hp.\nMazda RX4 Wag has 110 hp.\nDatsun 710 has 93 hp.\n\n\n\n when going for efficient code, use sprintf()\nCan be used with dplyr::mutate() as well as other tidyverse packages"
+    "text": "📦glue\n\ntidyverse\n\n\n\nEasy function to generate strings\n\nglue() has access to the environment and can evaluate expressions\n\ntitle &lt;- \"Code in R like a rockstar 🎸\"\nglue::glue(\"The current time is {Sys.time()}\\n  and the title of this presentation is: '{title}'\")\n\nThe current time is 2025-04-22 17:24:46.835864\nand the title of this presentation is: 'Code in R like a rockstar 🎸'\n\n\n\n\n\nData can come from other sources, such as a dataframe (a list or an environment)\n\nhead(mtcars, n = 3) |&gt;\n  tibble::rownames_to_column(var = \"model\") |&gt; \n  glue::glue_data(\"{model} has {hp} hp.\")\n\nMazda RX4 has 110 hp.\nMazda RX4 Wag has 110 hp.\nDatsun 710 has 93 hp.\n\n\n\n when going for efficient code, use sprintf()\nCan be used with dplyr::mutate() as well as other tidyverse packages"
   },
   {
     "objectID": "r_as_a_rockstar.html#ggplot2-source-gist",
