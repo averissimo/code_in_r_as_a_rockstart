@@ -2,6 +2,8 @@
 title: "Code in R like a rockstar 🎸"
 author: André Veríssimo, Ph.D.
 date: April 22, 2025
+subtitle: "&nbsp;"
+institute: <br />Systems Biomedicine Research Group<br />INESC-ID · Técnico Lisboa
 engine: knitr
 webr:  
   packages:
