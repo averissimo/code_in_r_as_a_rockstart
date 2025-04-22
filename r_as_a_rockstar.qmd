@@ -39,33 +39,31 @@ format:
 
 ## Who am I?
 
-- PhD from Técnico developing new omics models based on graph structures
+-   PhD from Técnico developing new omics models based on graph structures
 
-- Author and maintainer of `📦glmSparseNet` and `📦shiny.telemetry`
+-   Author and maintainer of `📦glmSparseNet` and `📦shiny.telemetry`
 
-- Part of the core team at `📦teal` framework at Roche
+-   Part of the core team at `📦teal` framework at Roche
 
-- Contributor to **[Pharmaverse]{.highlight}** and **[R Consortium Submission working group]{.highlight}**
+-   Contributor to [**Pharmaverse**]{.highlight} and [**R Consortium Submission working group**]{.highlight}
 
 ## Goal of the presentation
 
-::: {style="text-align: center;"}
-
+:::::: {style="text-align: center;"}
 ::: {style="margin-top: 100px"}
-Learn some tricks and  [**best practices**]{.highlight}  
-[**in {{<fa brands r-project >}} development**]{.highlight}
+Learn some tricks and [**best practices**]{.highlight}\
+[**in {{**<fa brands r-project >}} development]{.highlight}
 :::
 
 ::: {style="margin-top: 50px;"}
-At the end you will be  
+At the end you will be\
 [**motivated to develop better code**]{.highlight}
 :::
 
 ::: {style="margin-top: 50px;"}
 and to write [**reproducible code/results**]{.highlight}
 :::
-
-:::
+::::::
 
 # Base {{<fa brands r-project >}} is cool
 
@@ -98,7 +96,7 @@ foo
 -   Cache your long running calls with `📦memoise`
 -   Avoid `source(...)`
 
-## _{{< fa solid code-branch >}} git_ repositories to track code {.smaller background-color="#3b1200"}
+## {{< fa solid code-branch >}} *git* repositories to track code {.smaller background-color="#3b1200"}
 
 ::: footer
 [Tricks]{.small-caps}
@@ -107,23 +105,22 @@ foo
 ::: {style="margin-top: 50px;"}
 :::
 
-::::: columns
+:::::: columns
 ::: {.column width="20%"}
 ![](figures/git_meme.png){style="display: block; margin: auto; padding-top: 1em;"}
 :::
 
 ::: {.column width="5%"}
-
 :::
 
 ::: {.column width="70%"}
 -   With [**version control**]{.highlight} you minimize changes of losing work
     -   Even for 1 person projects
 -   {{< fa brands github >}} Github Education is free for students[^1]
-    - Unlimited private repositories & {{< fa robot >}} Copilot
-- We have a {{< fa brands github >}} github organization: [github.com/sysbiomed](https://github.com/sysbiomed)
+    -   Unlimited private repositories & {{< fa robot >}} Copilot
+-   We have a {{< fa brands github >}} github organization: [github.com/sysbiomed](https://github.com/sysbiomed)
 :::
-:::::
+::::::
 
 [^1]: [github.com/education/students](https://github.com/education/students)
 
@@ -212,7 +209,7 @@ test_data <- testing(car_split)
 ::: {style="margin-top: 50px;"}
 :::
 
-[_vs._]{.smaller1}
+[*vs.*]{.smaller1}
 
 ::: {style="margin-top: 50px;"}
 :::
@@ -223,7 +220,7 @@ train_data <- rsample::training(car_split)
 test_data <- rsample::testing(car_split)
 ```
 
-## Write readable code {background-color="#3b1200" .smaller}
+## Write readable code {.smaller background-color="#3b1200"}
 
 ::: footer
 [Tricks]{.small-caps}
@@ -248,7 +245,7 @@ if (condition2) {
 ::: {style="margin-top: 50px;"}
 :::
 
-[_vs._]{.smaller1}
+[*vs.*]{.smaller1}
 
 ::: {style="margin-top: 50px;"}
 :::
@@ -286,15 +283,15 @@ logger::log_warn("This is an warning message")
 
 > Using these will make your life easier
 
-- `|>` Pipe operator
-    - shortcut in rstudio: _[ctrl + shift + m]{.highlight-soft}_
-- `%||%`
-- `sapply` _vs._ `for (x in z) { ... }`
-- `Filter()` / `Reduce()`
+-   `|>` Pipe operator
+    -   shortcut in rstudio: [*ctrl + shift + m*]{.highlight-soft}
+-   `%||%`
+-   `sapply` *vs.* `for (x in z) { ... }`
+-   `Filter()` / `Reduce()`
 
-## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate=true}
+## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate="true"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
@@ -321,9 +318,9 @@ mtcars$mpg |> scale() |> sort() |> head(16) |> tail(16)
 ::: {style="margin-top: 50px;"}
 :::
 
-## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate=true}
+## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate="true"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
@@ -356,14 +353,13 @@ mtcars$mpg |>
 ::: {style="margin-top: 50px;"}
 :::
 
-## [`|>` Pipe operator]{style="opacity: 0.5;"} {.smaller background-color="#191e31" auto-animate=true}
+## [`|>` Pipe operator]{style="opacity: 0.5;"} {.smaller background-color="#191e31" auto-animate="true"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
 ::: {style="opacity: 0.5;"}
-
 Let's create a trail of function calls
 
 ```{r, echo=TRUE}
@@ -391,24 +387,21 @@ mtcars$mpg |>
   head(16) |> 
   tail(16)
 ```
-
 :::
-
 
 ::: {style="margin-top: 50px;"}
 :::
 
-![](figures/its-kinda-the-same.jpg){.absolute left="0" right="0" top=0 bottom=0 style="margin: auto auto;"}
-
+![](figures/its-kinda-the-same.jpg){.absolute left="0" right="0" top="0" bottom="0" style="margin: auto auto;"}
 
 ## `|>` Pipe operator {.smaller background-color="#191e31"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
-- You can use it on other arguments of a function
-    - As long as they are named
+-   You can use it on other arguments of a function
+    -   As long as they are named
 
 #### This feeds the string to the wrong argument
 
@@ -416,8 +409,7 @@ mtcars$mpg |>
 "a text with 1234 and 5678" |> grepl("[0-9]+")        # ❌
 ```
 
-::: {.fragment}
-
+:::: fragment
 ::: {style="margin-top: 30px;"}
 :::
 
@@ -426,11 +418,9 @@ mtcars$mpg |>
 ```{r, echo=TRUE}
 "a text with 1234 and 5678" |> grepl("[0-9]+", x = _) # ✅
 ```
+::::
 
-:::
-
-::: {.fragment}
-
+:::: fragment
 ::: {style="margin-top: 30px;"}
 :::
 
@@ -442,16 +432,15 @@ formals(grepl) |>                                  # Named list of arguments wit
   paste(collapse = ", ") |>                        # Collapse names into comma separated string
   glue::glue("usage: grepl({params})", params = _) # Creates usage string
 ```
-
-:::
+::::
 
 ## `%||%` Null Coalesce operator {background-color="#191e31"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
-```{.r code-line-numbers="2-7"}
+``` {.r code-line-numbers="2-7"}
 foo <- NULL
 bar <- if (is.null(foo)) {
   0
@@ -466,15 +455,15 @@ bar
 1
 ```
 
+::: {style="margin-top: 30px;"}
+:::
+
+[*vs.*]{.smaller1}
 
 ::: {style="margin-top: 30px;"}
 :::
 
-[_vs._]{.smaller1}
-
-::: {style="margin-top: 30px;"}
-:::
-```{.r code-line-numbers="2"}
+``` {.r code-line-numbers="2"}
 foo <- NULL
 bar <- foo %||% 0 + 1
 bar
@@ -484,9 +473,9 @@ bar
 1
 ```
 
-## `sapply()` / `vapply()` / ... {background-color="#191e31" .smaller}
+## `sapply()` / `vapply()` / ... {.smaller background-color="#191e31"}
 
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
@@ -503,18 +492,15 @@ result
 ::: {style="margin-top: 30px;"}
 :::
 
-::: {.fragment}
-
+::: fragment
 ```{webr}
 result <- sapply(x, mean)
 result
 ```
-
 :::
 
-::: {.fragment}
-
-```.r
+::: fragment
+``` r
 x_long <- rep(x, 1000)
 
 f <- \(x_long) {
@@ -531,10 +517,9 @@ bench::mark(
 ```
 
 ![](figures/benchmark.png)
-
 :::
 
-## `mclapply()` {background-color="#191e31" .smaller}
+## `mclapply()` {.smaller background-color="#191e31"}
 
 When using `lapply()` or `sapply()` on large datasets, you can use `mclapply()` to parallelize the process.
 
@@ -550,7 +535,6 @@ f <- \(x_long) {
 s <- \(x_long) sapply(x_long, mean)
 v <- \(x_long) vapply(x_long, mean, numeric(1L))
 ```
-
 
 ```{r mclapply, echo=TRUE, cache=TRUE}
 #| code-line-numbers: "1-8"
@@ -570,16 +554,13 @@ bench::mark(
 )
 ```
 
-
-
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
+## `Reduce()` / `Filter()` {.smaller background-color="#191e31"}
 
-## `Reduce()` / `Filter()` {background-color="#191e31" .smaller}
-
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
@@ -591,7 +572,6 @@ total <- Reduce(
 )
 total
 ```
-
 
 ```{webr}
 foo <- c(list(NULL), 1:10, NULL, 11:12)
@@ -608,11 +588,10 @@ foo[sapply(foo, Negate(is.null))]|> paste(collapse = ", ")
 
 Keep an eye in a few slides for `📦purrr` that has similar functions
 
-
-## `local()` {background-color="#191e31" .smaller}
+## `local()` {.smaller background-color="#191e31"}
 
 ::: aside
-{{< fa solid circle-info >}}  `<<-` allows to write to parent environment _(use with care)_
+{{< fa solid circle-info >}} `<<-` allows to write to parent environment *(use with care)*
 :::
 
 Useful for when you create a lot of intermediate variables that are never necessary.
@@ -629,8 +608,7 @@ total <- local({
 total
 ```
 
-
-::: footer 
+::: footer
 [Base {{<fa brands r-project >}}]{.small-caps}
 :::
 
@@ -642,14 +620,13 @@ total
 Learn more at [tidyverse.org](https://www.tidyverse.org)
 :::
 
-## `📦dplyr` {background-color="#1a162d" .smaller .scrollable}
+## `📦dplyr` {.smaller .scrollable background-color="#1a162d"}
 
 ::: footer
 tidyverse
 :::
 
-::: {.fragment .semi-fade-out fragment-index=1}
-
+:::: {.fragment .semi-fade-out fragment-index="1"}
 > A grammar of data manipulation
 
 ```{webr}
@@ -660,13 +637,11 @@ iris |>
 ```
 
 ::: {style="padding-left: 2em; font-size: .6em;"}
-{{< fa solid circle-info >}}  `📦dplyr` is an acceptable exception to the practice of prefixing function calls with package name.
+{{< fa solid circle-info >}} `📦dplyr` is an acceptable exception to the practice of prefixing function calls with package name.
 :::
+::::
 
-:::
-
-::: {.fragment .fade-in-then-semi-out fragment-index=1}
-
+:::: {.fragment .fade-in-then-semi-out fragment-index="1"}
 ::: {style="margin-top: 30px;"}
 :::
 
@@ -688,11 +663,9 @@ Reduce(
   init = data.frame()
 ) |> dplyr::tibble()
 ```
+::::
 
-:::
-
-::: {.fragment .fade-in-then-semi-out}
-
+:::: {.fragment .fade-in-then-semi-out}
 ::: {style="margin-top: 30px;"}
 :::
 
@@ -703,11 +676,9 @@ iris_ave <- iris[, c("Species", "Sepal.Length")]
 iris_ave$Sepal.Length.relative <- iris$Sepal.Length / ave(iris$Sepal.Length, iris$Species, FUN = mean)
 dplyr::tibble(iris_ave)
 ```
+::::
 
-:::
-
-::: {.fragment .fade-in-then-semi-out}
-
+:::: {.fragment .fade-in-then-semi-out}
 ::: {style="margin-top: 30px;"}
 :::
 
@@ -719,10 +690,9 @@ iris_dt <- as.data.table(iris[, c("Species", "Sepal.Length")] )
 iris_dt[, Sepal.Length.relative := Sepal.Length / mean(Sepal.Length), by = Species] |> 
   dplyr::tibble()
 ```
+::::
 
-:::
-
-## `📦tidyr` {background-color="#1a162d" .smaller}
+## `📦tidyr` {.smaller background-color="#1a162d"}
 
 ::: footer
 tidyverse
@@ -730,7 +700,6 @@ tidyverse
 
 ::::: columns
 ::: {.column width="50%"}
-
 Original data
 
 ```{r echo=TRUE}
@@ -744,7 +713,6 @@ tidyr::relig_income |>
 :::
 
 ::: {.column width="50%"}
-
 `tidyr::pivot_longer()`
 
 ```{r echo=TRUE}
@@ -755,11 +723,10 @@ tidyr::relig_income |>
     values_to = "count"
   )
 ```
-
 :::
 :::::
 
-## `📦tidyr` {background-color="#1a162d" .smaller}
+## `📦tidyr` {.smaller background-color="#1a162d"}
 
 ::: footer
 tidyverse
@@ -767,7 +734,6 @@ tidyverse
 
 ::::: columns
 ::: {.column width="30%"}
-
 Original data
 
 ```{r echo=TRUE}
@@ -775,11 +741,9 @@ Original data
 #
 tidyr::fish_encounters
 ```
-
 :::
 
 ::: {.column width="70%"}
-
 `tidyr::pivot_wider()`
 
 ```{r echo=TRUE}
@@ -787,74 +751,60 @@ tidyr::fish_encounters |>
   tidyr::pivot_wider(names_from = station, values_from = seen) |>
   print(width = 60, n = 10)
 ```
-
 :::
 :::::
 
-
-## `📦purrr` {background-color="#1a162d" .smaller}
+## `📦purrr` {.smaller background-color="#1a162d"}
 
 ::: footer
 tidyverse
 :::
 
-::: {.fragment .semi-fade-out fragment-index=1}
-
+::: {.fragment .semi-fade-out fragment-index="1"}
 ```{r purrr1, echo=TRUE, cache=TRUE}
 purrr::pluck(list(a = list(b = 2)), "a", "b")
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=1}
-
+::: {.fragment .fade-in-then-semi-out fragment-index="1"}
 ```{r purrr2, echo=TRUE, cache=TRUE}
 purrr::pluck(list(c = 3), "foo")
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=2}
-
+::: {.fragment .fade-in-then-semi-out fragment-index="2"}
 ```{r purrr3, echo=TRUE, cache=TRUE}
 purrr::pluck(list(c = 3), "foo", .default = 0)
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=3}
-
+::: {.fragment .fade-in-then-semi-out fragment-index="3"}
 ```{r purrr4, echo=TRUE, cache=TRUE}
 purrr::keep(1:10, ~.x < 5) # keep values below 5
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=4}
-
+::: {.fragment .fade-in-then-semi-out fragment-index="4"}
 ```{r purrr5, echo=TRUE, cache=TRUE}
 purrr::discard(1:10, ~.x >= 5) # discard values above 5
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=5}
-
+::: {.fragment .fade-in-then-semi-out fragment-index="5"}
 ```{r purrr6, echo=TRUE, cache=TRUE}
 list(1, 2, 3, NULL, 4, NULL) |> paste(collapse = ", ")
 purrr::compact(list(1, 2, 3, NULL, 4, NULL)) |> paste(collapse = ", ") # remove NULL values
 ```
-
 :::
 
-## `📦glue` {background-color="#1a162d" .smaller}
+## `📦glue` {.smaller background-color="#1a162d"}
 
 ::: footer
 tidyverse
 :::
 
 ::: aside
-{{< fa solid circle-info >}} when going for efficient code, use `sprintf()`  
+{{< fa solid circle-info >}} when going for efficient code, use `sprintf()`\
 Can be used with `dplyr::mutate()` as well as other tidyverse packages
 :::
 
@@ -867,11 +817,10 @@ title <- "Code in R like a rockstar 🎸"
 glue::glue("The current time is {Sys.time()}\n  and the title of this presentation is: '{title}'")
 ```
 
-
 ::: {style="margin-top: 50px;"}
 :::
 
-Data can come from other sources, such as a _dataframe_ _(a list or an environment)_
+Data can come from other sources, such as a *dataframe* *(a list or an environment)*
 
 ```{r echo=TRUE}
 head(mtcars, n = 3) |>
@@ -879,19 +828,17 @@ head(mtcars, n = 3) |>
   glue::glue_data("{model} has {hp} hp.")
 ```
 
-
-## `📦ggplot2` (source [gist](https://gist.github.com/averissimo/8804d3ffed0613f9f912c4ef3465fbc1))  {background-color="#1a162d" .smaller}
+## `📦ggplot2` (source [gist](https://gist.github.com/averissimo/8804d3ffed0613f9f912c4ef3465fbc1)) {.smaller background-color="#1a162d"}
 
 ![](figures/electricity.png){.absolute left=0 right=0 top=40 style="margin: auto auto; }
 
 ## `📦ggplot2` {background-color="#1a162d"}
 
-![](figures/electricity.png){.absolute left=0 right=0 top=0 style="margin: auto auto; scale: 1.5; transform: scale(1.25, 1.25) translate(0, 18%);"}
-
+![](figures/electricity.png){.absolute left="0" right="0" top="0" style="margin: auto auto; scale: 1.5; transform: scale(1.25, 1.25) translate(0, 18%);"}
 
 # `📦memoise` {.smaller .scrollable}
 
-> Memoisation is an **[optimization technique to speed up computer programs by storing the results of expensive function calls]{.highlight}** and returning the cached result when the same inputs occur again
+> Memoisation is an [**optimization technique to speed up computer programs by storing the results of expensive function calls**]{.highlight} and returning the cached result when the same inputs occur again
 
 ```{webr}
 #| autorun: true
@@ -914,19 +861,18 @@ tictoc::toc()
 
 ## `📦memoise` {.scrollable}
 
-::: {.smaller2}
-
-- Let's:
-    - [**Build lung survival data**]{.highlight}
-    - Train model on 80% of the data
-    - Test on the remaining 20%
-    - Run logrank test and calculate `p_value`
-- Repeat 100
+:::: smaller2
+-   Let's:
+    -   [**Build lung survival data**]{.highlight}
+    -   Train model on 80% of the data
+    -   Test on the remaining 20%
+    -   Run logrank test and calculate `p_value`
+-   Repeat 100
 
 ::: {style="margin-top: 30px;"}
 :::
 
-```{.r}
+``` r
 # Auxiliary function to generate x and y from a split
 gen_x_y <- \(fun, split, dat = fun(split)) list(
   x = model.matrix(surv_obj ~ age + sex + ph_ecog + wt_loss, data = dat)[, -1],
@@ -947,41 +893,39 @@ lung <- na.omit(survival::lung) |>
   
 cv_model <- memoise::memoise(glmnet::cv.glmnet)
 ```
-
-:::
+::::
 
 ## `📦memoise` {.smaller .scrollable}
 
-- Let's:
-    - Build lung survival data
-    - [**Train model on 80% of the data**]{.highlight}
-    - Test on the remaining 20%
-    - Run logrank test and calculate `p_value`
-- Repeat 100
+-   Let's:
+    -   Build lung survival data
+    -   [**Train model on 80% of the data**]{.highlight}
+    -   Test on the remaining 20%
+    -   Run logrank test and calculate `p_value`
+-   Repeat 100
 
 ::: {style="margin-top: 30px;"}
 :::
 
-```{.r}
+``` r
 split <- rsample::initial_split(lung, prop = 0.8, strata = "event")
 lung_train <- gen_x_y(rsample::training, split)
 cvfit <- cv_model(lung_train$x, lung_train$y, family = "cox") # fit model
 ```
 
-
 ## `📦memoise` {.scrollable .smaller}
 
-- Let's:
-    - Build lung survival data
-    - Train model on 80% of the data
-    - [**Test on the remaining 20%**]{.highlight}
-    - Run logrank test and calculate `p_value`
-- Repeat 100
+-   Let's:
+    -   Build lung survival data
+    -   Train model on 80% of the data
+    -   [**Test on the remaining 20%**]{.highlight}
+    -   Run logrank test and calculate `p_value`
+-   Repeat 100
 
 ::: {style="margin-top: 30px;"}
 :::
 
-```{.r code-line-numbers="1,2,4,5"}
+``` {.r code-line-numbers="1,2,4,5"}
 lung_test <- gen_x_y(rsample::testing, split)
 set.seed(seed * 42) # Just in case
 tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
@@ -998,17 +942,17 @@ tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
 
 ## `📦memoise` {.scrollable .smaller}
 
-- Let's:
-    - Build lung survival data
-    - Train model on 80% of the data
-    - Test on the remaining 20%
-    - [**Run logrank test and calculate `p_value`**]{.highlight}
-- Repeat 100
+-   Let's:
+    -   Build lung survival data
+    -   Train model on 80% of the data
+    -   Test on the remaining 20%
+    -   [**Run logrank test and calculate `p_value`**]{.highlight}
+-   Repeat 100
 
 ::: {style="margin-top: 30px;"}
 :::
 
-```{.r code-line-numbers="5-10"}
+``` {.r code-line-numbers="5-10"}
 lung_test <- gen_x_y(rsample::testing, split)
 set.seed(seed * 42) # Just in case
 tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
@@ -1025,21 +969,19 @@ tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
 
 ## `📦memoise` {.scrollable .smaller}
 
-::: {.r-stack}
-
-::: {.fragment .semi-fade-out fragment-index=1 style="width: 100%"}
-
-- Let's:
-    - Build lung survival data
-    - Train model on 80% of the data
-    - Test on the remaining 20%
-    - Run logrank test and calculate `p_value`
-- [**Repeat 100**]{.highlight}
+:::::: r-stack
+:::: {.fragment .semi-fade-out fragment-index="1" style="width: 100%"}
+-   Let's:
+    -   Build lung survival data
+    -   Train model on 80% of the data
+    -   Test on the remaining 20%
+    -   Run logrank test and calculate `p_value`
+-   [**Repeat 100**]{.highlight}
 
 ::: {style="margin-top: 30px;"}
 :::
 
-```{.r}
+``` r
 tictoc::tic(tic_str)
 p_values <- vapply(
   seq_len(200),
@@ -1050,12 +992,10 @@ p_values <- vapply(
 )
 tictoc::toc()
 ```
+::::
 
-:::
-
-::: {.fragment fragment-index=1 style="background-color: black;"}
-
-```{.r}
+::: {.fragment fragment-index="1" style="background-color: black;"}
+``` r
 tictoc::tic(tic_str)
 p_values <- vapply(
   seq_len(200),
@@ -1086,29 +1026,24 @@ p_values <- vapply(
   dplyr::mutate(cdf = seq_along(p_value) / length(p_value))
 tictoc::toc()
 ```
-
-
 :::
-
-:::
+::::::
 
 ## `📦memoise` {.scrollable}
 
-::: {.smaller2}
-
-- Example below will:
-    - Build lung survival data
-    - Train model on 80% of the data
-    - Test on the remaining 20%
-    - Run logrank test and calculate `p_value`
-- Repeat 100
-- [**Plot results**]{.highlight}
+:::: smaller2
+-   Example below will:
+    -   Build lung survival data
+    -   Train model on 80% of the data
+    -   Test on the remaining 20%
+    -   Run logrank test and calculate `p_value`
+-   Repeat 100
+-   [**Plot results**]{.highlight}
 
 ::: {style="margin-top: 30px;"}
-
 :::
 
-```{.r code-line-numbers="3-19"}
+``` {.r code-line-numbers="3-19"}
 #
 # Nice cumulative distribution plot
 p_values |>
@@ -1129,8 +1064,7 @@ p_values |>
     ggplot2::expand_limits(x = c(0, 1), y = c(0, 1)) +
     ggplot2::theme_minimal()
 ```
-
-:::
+::::
 
 ## `📦memoise` {.smaller}
 
@@ -1218,19 +1152,22 @@ p_values |>
 
 # Rmarkdown & Quarto {background-color="#152330"}
 
-## Powerful reports & presentations  {.smaller auto-animate="true" background-color="#152330"}
+## Powerful reports & presentations {.smaller auto-animate="true" background-color="#152330"}
 
-- Great tools to communicate results
-- You can use it to generate reproducible results
-    - `params:` property in rmarkdown title
-    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
+-   Great tools to communicate results
+-   You can use it to generate reproducible results
+    -   `params:` property in rmarkdown title
+    -   `rmarkdown::render()` {{< fa solid hat-wizard >}}
 
-## Powerful reports & presentations  {.smaller auto-animate="true" background-color="#152330"}
+## Powerful reports & presentations {.smaller auto-animate="true" background-color="#152330"}
 
-- Great tools to communicate results
-- You can use it to generate reproducible results
-    - `params:` property in rmarkdown title
-    ```{.r code-line-numbers="4-7"}
+-   Great tools to communicate results
+
+-   You can use it to generate reproducible results
+
+    -   `params:` property in rmarkdown title
+
+    ``` {.r code-line-numbers="4-7"}
     ---
     title: "Network-based models"
     output: html_document
@@ -1240,23 +1177,27 @@ p_values |>
       folds: 10
       # ...
     ---
-    
+
     # then use `params$<name> in code
     set.seed(params$seed)
     ```
-    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
+
+    -   `rmarkdown::render()` {{< fa solid hat-wizard >}}
 
 ## Powerful reports & presentations {.smaller auto-animate="true" background-color="#152330"}
 
-- Great tools to communicate results
-- You can use it to generate reproducible results
-    - `params:` property in rmarkdown title
-    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
-    ```r
+-   Great tools to communicate results
+
+-   You can use it to generate reproducible results
+
+    -   `params:` property in rmarkdown title
+    -   `rmarkdown::render()` {{< fa solid hat-wizard >}}
+
+    ``` r
     props <- c(.8, .7)
     folds <- c(10, 5)
     seed <- 2025 + seq_len(10)
-      
+
     dir.create("Results/reports", showWarnings = FALSE)
     purrr::walk(seed, \(s)
       purrr::walk(props, \(x) 
@@ -1270,11 +1211,11 @@ p_values |>
     )
     ```
 
-## Powerful reports & presentations  {.smaller  background-color="#152330"}
+## Powerful reports & presentations {.smaller background-color="#152330"}
 
 Add to the end of an Rmarkdown:
 
-```{.r code-line-numbers="2-7,9-11,13"}
+``` {.r code-line-numbers="2-7,9-11,13"}
 ## Add to end of chunk
 list(results = list()) |> as.environment()            # Boilerplate
 results_path <- here::here("results_rmarkdown.RData") # Path to save
@@ -1290,84 +1231,70 @@ env$results[[length(env$results) + 1]] <- list( # Add new result
 save("results", file = results_path, envir = env)
 ```
 
+# 💣 Don't `source` files {.smaller background-color="#6877a1"}
 
-
-# 💣 Don't `source` files {background-color="#6877a1" .smaller}
-
-- Difficult to maintain
-- Code runs inside scripts without any control
-- Should only be used to store functions
-    - There are better alternatives
+-   Difficult to maintain
+-   Code runs inside scripts without any control
+-   Should only be used to store functions
+    -   There are better alternatives
 
 . . .
 
 ::: {style="margin-top: 50px;"}
 :::
 
-**[If you really need]{.highlight}**, use relative paths:
+[**If you really need**]{.highlight}, use relative paths:
 
-  - `here::here("./another.R")` _(in current directory)_
-  - `here::here("../something.R")` _(in parent directory)_
-  - _or_ `here::here("./folder/to/script.R")` _(in one of the folders)_
+-   `here::here("./another.R")` *(in current directory)*
+-   `here::here("../something.R")` *(in parent directory)*
+-   *or* `here::here("./folder/to/script.R")` *(in one of the folders)*
 
-## Alternatives to `source()` {background-color="#6877a1" .smaller}
+## Alternatives to `source()` {.smaller background-color="#6877a1"}
 
-::: {.fragment .semi-fade-out fragment-index=1}
-
+::: {.fragment .semi-fade-out fragment-index="1"}
 `📦box` is a package that allows to import functions from other scripts
 
-- it encapsulates the code in separate environments
+-   it encapsulates the code in separate environments
 
-```r
+``` r
 #' @export
 fun <- function(a, b) a + b
 ```
-
 :::
 
-::: {.fragment .fade-in-then-semi-out fragment-index=1}
+::: {.fragment .fade-in-then-semi-out fragment-index="1"}
+-   Kinda like `source(...)` but it doesn't run anything in the current environment
 
-- Kinda like `source(...)` but it doesn't run anything in the current environment
-
-```r
+``` r
 box::use(mod/another[...])
 
 fun(1, 2)
 ```
-
 :::
 
-
 ::: {.fragment .fade-in-then-semi-out}
+-   The file can be loaded and then used with its name `<filename>$<fun_name>`
 
-- The file can be loaded and then used with its name
-`<filename>$<fun_name>`
-
-```r
+``` r
 box::use(mod/another)
 
 another$fun(1, 2)
 ```
-
 :::
 
 ::: {.fragment .fade-in-then-semi-out}
+-   We can only import some functions
 
-- We can only import some functions
-
-
-```r
+``` r
 box::use(mod/another[fun])
 
 fun(1, 2)
 ```
-
 :::
 
-## Alternatives to `source()` {background-color="#6877a1" .smaller}
+## Alternatives to `source()` {.smaller background-color="#6877a1"}
 
 The real power comes from the restricted scope it can operate in.
-
 
 ```{r, echo=TRUE, message=TRUE, error=TRUE}
 #| code-line-numbers: "2,4,6-7"
@@ -1402,16 +1329,17 @@ source("mod/another.R")
 another$log("a_variable has value: {a_variable}")
 ```
 
-## Alternatives to `source()` {background-color="#6877a1" .smaller}
+## Alternatives to `source()` {.smaller background-color="#6877a1"}
 
 ::: {style="margin-top: 50px;"}
 :::
+
 [**Create your own R package**]{.highlight}
 
-&nbsp; _(let's try a live demo if we have time)_
+  *(let's try a live demo if we have time)*
 
 # Thanks!
 
 ::: aside
-[_Take some cool Appsilon's package stickers with you_]{.highlight-soft}
+[*Take some cool Appsilon's package stickers with you*]{.highlight-soft}
 :::
