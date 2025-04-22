@@ -1,4 +1,4 @@
-# Code in R as a rockstar
+# Code in R like a Rockstar
 
 [Link to presentation](https://averissimo.github.io/code_in_r_as_a_rockstart/)
 
