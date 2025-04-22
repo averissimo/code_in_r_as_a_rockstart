@@ -1,0 +1,1417 @@
+---
+title: "Code in R like a rockstar 🎸"
+engine: knitr
+webr:  
+  packages:
+    - logger
+    - crayon
+    - glue
+    - data.table
+    - dplyr
+    - tidyr
+    - purrr
+    - glue
+    - ggplot2
+    - memoise
+    - glmnet
+    - rsample
+    - tictoc
+    - bench
+format: 
+  live-revealjs:
+    center-title-slide: false
+    theme: [night, css/custom.sass]
+    include-in-header: 
+      text: |
+        <style>
+        .center-xy {
+          margin: 0;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -ms-transform: translateY(-50%), translateX(-50%);
+          transform: translateY(-50%), translateX(-50%);
+        }
+        </style>
+---
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+## Who am I?
+
+- PhD from Técnico developing new omics models based on graph structures
+
+- Author and maintainer of `📦glmSparseNet` and `📦shiny.telemetry`
+
+- Part of the core team at `📦teal` framework at Roche
+
+- Contributor to **[Pharmaverse]{.highlight}** and **[R Consortium Submission working group]{.highlight}**
+
+## Goal of the presentation
+
+::: {style="text-align: center;"}
+
+::: {style="margin-top: 100px"}
+Learn some tricks and  [**best practices**]{.highlight}  
+[**in {{<fa brands r-project >}} development**]{.highlight}
+:::
+
+::: {style="margin-top: 50px;"}
+At the end you will be  
+[**motivated to develop better code**]{.highlight}
+:::
+
+::: {style="margin-top: 50px;"}
+and to write [**reproducible code/results**]{.highlight}
+:::
+
+:::
+
+# Base {{<fa brands r-project >}} is cool
+
+-   It's open source
+-   Has powerful statistical methods
+-   Easy to manipulate & process data
+-   Great community
+
+. . .
+
+::: {style="color: gray"}
+But it has some quirks...
+:::
+
+```{r, echo=TRUE}
+foo <- NULL
+foo[[1]] <- 2
+foo
+```
+
+# Tricks {background-color="#3b1200"}
+
+::: aside
+{{< fa solid circle-info >}} Advance R is a great book by Hadley. Visit [adv-r.hadley.nz](adv-r.hadley.nz) to go much deeper.
+:::
+
+-   {{< fa solid code-branch >}}git repositories to track code
+-   `📦renv` to manage dependencies
+-   Write readable code
+-   Cache your long running calls with `📦memoise`
+-   Avoid `source(...)`
+
+## _{{< fa solid code-branch >}} git_ repositories to track code {.smaller background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+::: {style="margin-top: 50px;"}
+:::
+
+::::: columns
+::: {.column width="20%"}
+![](figures/git_meme.png){style="display: block; margin: auto; padding-top: 1em;"}
+:::
+
+::: {.column width="5%"}
+
+:::
+
+::: {.column width="70%"}
+-   With [**version control**]{.highlight} you minimize changes of losing work
+    -   Even for 1 person projects
+-   {{< fa brands github >}} Github Education is free for students[^1]
+    - Unlimited private repositories & {{< fa robot >}} Copilot
+- We have a {{< fa brands github >}} github organization: [github.com/sysbiomed](https://github.com/sysbiomed)
+:::
+:::::
+
+[^1]: [github.com/education/students](https://github.com/education/students)
+
+## `📦renv` to manage dependencies {auto-animate="true" background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+``` {.r code-line-numbers="2"}
+install.packages("renv")
+renv::init()     # Initialize the renv enviroment
+```
+
+## `📦renv` to manage dependencies {auto-animate="true" background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+``` {.r code-line-numbers="3-6"}
+install.packages("renv")
+renv::init()     # Initialize the renv enviroment
+install.packages("dplyr")
+renv::install("dplyr")
+renv::install("bioc::glmSparseNet")
+renv::install("sysbiomed/glmSparseNet")
+```
+
+## `📦renv` to manage dependencies {auto-animate="true" background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+``` {.r code-line-numbers="7"}
+install.packages("renv")
+renv::init()     # Initialize the renv enviroment
+install.packages("dplyr")
+renv::install("dplyr")
+renv::install("bioc::glmSparseNet")
+renv::install("sysbiomed/glmSparseNet")
+renv::snapshot() # to save installed packages & versions lockfile
+```
+
+## `📦renv` to manage dependencies {auto-animate="true" background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+``` {.r code-line-numbers="8"}
+install.packages("renv")
+renv::init()     # Initialize the renv enviroment
+install.packages("dplyr")
+renv::install("dplyr")
+renv::install("bioc::glmSparseNet")
+renv::install("sysbiomed/glmSparseNet")
+renv::snapshot() # to save installed packages & versions lockfile
+renv::restore()  # to restore same versions
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+![](figures/works_on_my_laptop.png){style="margin: auto; display: block;"}
+
+## Write readable code {background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+-   Prefix function calls with package name
+
+::: {style="margin-top: 50px;"}
+:::
+
+``` {.r code-line-numbers="1"}
+library(rsample)
+car_split <- initial_split(mtcars)
+train_data <- training(car_split)
+test_data <- testing(car_split)
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+[_vs._]{.smaller1}
+
+::: {style="margin-top: 50px;"}
+:::
+
+``` {.r code-line-numbers="1"}
+car_split <- rsample::initial_split(mtcars)
+train_data <- rsample::training(car_split)
+test_data <- rsample::testing(car_split)
+```
+
+## Write readable code {background-color="#3b1200" .smaller}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+-   Use return early
+-   Avoid long chunks of code
+
+``` {.r code-line-numbers="1,4-5,8-9"}
+if (condition) {
+  foo <- bar()
+  foo <- dplyr::filter(zoo %in% whoo)
+} else {
+  return(something)
+}
+
+if (condition2) {
+  stop("This is an error)
+}
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+[_vs._]{.smaller1}
+
+::: {style="margin-top: 50px;"}
+:::
+
+``` {.r code-line-numbers="1,6"}
+if (!condition) return(something)
+
+foo <- bar()
+foo <- dplyr::filter(zoo %in% whoo)
+
+stopifnot("This is an error" = condition2) # !condition2 && stop("This is an error)
+```
+
+## Write readable code {background-color="#3b1200"}
+
+::: footer
+[Tricks]{.small-caps}
+:::
+
+-   Use `📦logger`
+
+``` {.r code-line-numbers="1,5-7"}
+logger::log_info("This is an info message")
+
+foo <- "evaluated info"
+logger::log_layout(logger::layout_glue_colors)
+logger::log_info("This is an {foo} message that sums '1 + 1 = { 1 + 1 }'")
+logger::log_error("This is an error message")
+logger::log_warn("This is an warning message")
+```
+
+![](figures/logger.png){.absolute width="70%"}
+
+# Base {{<fa brands r-project >}} {background-color="#191e31"}
+
+> Using these will make your life easier
+
+- `|>` Pipe operator
+    - shortcut in rstudio: _[ctrl + shift + m]{.highlight-soft}_
+- `%||%`
+- `sapply` _vs._ `for (x in z) { ... }`
+- `Filter()` / `Reduce()`
+
+## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate=true}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+> Pipe a value into a call expression or a function expression.
+
+::: {style="margin-top: 50px;"}
+:::
+
+Let's create a trail of function calls
+
+```{r, echo=TRUE}
+tail(head(sort(scale(mtcars$mpg)), 16), 16)
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+Same, but with pipes
+
+```{r, echo=TRUE}
+mtcars$mpg |> scale() |> sort() |> head(16) |> tail(16)
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+## `|>` Pipe operator {.smaller background-color="#191e31" auto-animate=true}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+Let's create a trail of function calls
+
+```{r, echo=TRUE}
+tail(
+  head(
+    sort(
+      scale(mtcars$mpg)
+    ), 
+    16), 
+  16
+)
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+Same, but with pipes
+
+```{r, echo=TRUE}
+mtcars$mpg |> 
+  scale() |> 
+  sort() |> 
+  head(16) |> 
+  tail(16)
+```
+
+::: {style="margin-top: 50px;"}
+:::
+
+## [`|>` Pipe operator]{style="opacity: 0.5;"} {.smaller background-color="#191e31" auto-animate=true}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+::: {style="opacity: 0.5;"}
+
+Let's create a trail of function calls
+
+```{r, echo=TRUE}
+tail(
+  head(
+    sort(
+      scale(mtcars$mpg)
+    ), 
+    16), 
+  16
+)
+```
+:::
+
+::: {style="margin-top: 50px;"}
+:::
+
+::: {style="opacity: 0.5;"}
+Same, but with pipes
+
+```{r, echo=TRUE}
+mtcars$mpg |> 
+  scale() |> 
+  sort() |> 
+  head(16) |> 
+  tail(16)
+```
+
+:::
+
+
+::: {style="margin-top: 50px;"}
+:::
+
+![](figures/its-kinda-the-same.jpg){.absolute left="0" right="0" top=0 bottom=0 style="margin: auto auto;"}
+
+
+## `|>` Pipe operator {.smaller background-color="#191e31"}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+- You can use it on other arguments of a function
+    - As long as they are named
+
+#### This feeds the string to the wrong argument
+
+```{r, echo=TRUE}
+"a text with 1234 and 5678" |> grepl("[0-9]+")        # ❌
+```
+
+::: {.fragment}
+
+::: {style="margin-top: 30px;"}
+:::
+
+#### Feeds to `x` argument
+
+```{r, echo=TRUE}
+"a text with 1234 and 5678" |> grepl("[0-9]+", x = _) # ✅
+```
+
+:::
+
+::: {.fragment}
+
+::: {style="margin-top: 30px;"}
+:::
+
+`grepl()` usage if you do not know by heart
+
+```{r echo=TRUE, eval=TRUE}
+formals(grepl) |>                                  # Named list of arguments with defaults
+  names() |>                                       # Gets the names
+  paste(collapse = ", ") |>                        # Collapse names into comma separated string
+  glue::glue("usage: grepl({params})", params = _) # Creates usage string
+```
+
+:::
+
+## `%||%` Null Coalesce operator {background-color="#191e31"}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+```{.r code-line-numbers="2-7"}
+foo <- NULL
+bar <- if (is.null(foo)) {
+  0
+} else {
+  foo
+}
+bar <- bar + 1
+bar
+```
+
+```{r}
+1
+```
+
+
+::: {style="margin-top: 30px;"}
+:::
+
+[_vs._]{.smaller1}
+
+::: {style="margin-top: 30px;"}
+:::
+```{.r code-line-numbers="2"}
+foo <- NULL
+bar <- foo %||% 0 + 1
+bar
+```
+
+```{r}
+1
+```
+
+## `sapply()` / `vapply()` / ... {background-color="#191e31" .smaller}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+```{webr}
+x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
+result <- c()
+for (.x in x) {
+  result <- c(result, mean(.x))
+}
+result <- setNames(result, names(x))
+result
+```
+
+::: {style="margin-top: 30px;"}
+:::
+
+::: {.fragment}
+
+```{webr}
+result <- sapply(x, mean)
+result
+```
+
+:::
+
+::: {.fragment}
+
+```.r
+x_long <- rep(x, 1000)
+
+f <- \(x_long) {
+  result <- c()
+  for (.x in x_long) result <- c(result, mean(.x))
+  setNames(result, names(x_long))
+}
+s <- \(x_long) sapply(x_long, mean)
+v <- \(x_long) vapply(x_long, mean, numeric(1L))
+
+bench::mark(
+  "for" = f(x_long), "sapply" = s(x_long), "vapply" = v(x_long)
+)
+```
+
+![](figures/benchmark.png)
+
+:::
+
+## `mclapply()` {background-color="#191e31" .smaller}
+
+When using `lapply()` or `sapply()` on large datasets, you can use `mclapply()` to parallelize the process.
+
+```{r mclapply_pre, cache=TRUE}
+x <- list(a = 1:10, beta = exp(-3:3), logic = c(TRUE,FALSE,FALSE,TRUE))
+x_long <- rep(x, 1000)
+
+f <- \(x_long) {
+  result <- c()
+  for (.x in x_long) result <- c(result, mean(.x))
+  setNames(result, names(x_long))
+}
+s <- \(x_long) sapply(x_long, mean)
+v <- \(x_long) vapply(x_long, mean, numeric(1L))
+```
+
+
+```{r mclapply, echo=TRUE, cache=TRUE}
+#| code-line-numbers: "1-8"
+library(parallel)
+
+m <- \(x_long) mclapply(
+  x_long,
+  mean,
+  mc.cores = 4,
+  mc.preschedule = TRUE # 4 cores running each 1/4 of the input
+                        # vs. FALSE where 1 fork is created for each input
+)
+
+x_long <- rep(x, 30000) # let's make it worth it
+bench::mark(
+  "for" = f(x_long), "sapply" = s(x_long), "vapply" = v(x_long), "mclapply" = m(x_long), memory = FALSE, check = FALSE
+)
+```
+
+
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+
+## `Reduce()` / `Filter()` {background-color="#191e31" .smaller}
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+```{webr}
+total <- Reduce(
+  \(u, x) u + x^2,
+  1:10,
+  init = 0
+)
+total
+```
+
+
+```{webr}
+foo <- c(list(NULL), 1:10, NULL, 11:12)
+foo |> paste(collapse = ", ")
+Filter(
+  \(x) x < 5 && !is.null(x),
+  foo
+)|> paste(collapse = ", ")
+
+foo[sapply(foo, Negate(is.null))]|> paste(collapse = ", ")
+```
+
+. . .
+
+Keep an eye in a few slides for `📦purrr` that has similar functions
+
+
+## `local()` {background-color="#191e31" .smaller}
+
+::: aside
+{{< fa solid circle-info >}}  `<<-` allows to write to parent environment _(use with care)_
+:::
+
+Useful for when you create a lot of intermediate variables that are never necessary.
+
+```{webr}
+total <- local({
+  total_local <- 0
+  for (x2 in 1:12) {
+    y2 <- x2^2
+    total_local <- total_local + y2
+  }
+  total_local
+})
+total
+```
+
+
+::: footer 
+[Base {{<fa brands r-project >}}]{.small-caps}
+:::
+
+#  {.no-title background-color="#1a162d"}
+
+![](figures/tidyverse.png){.absolute top="0" width="90%" left="0" right="0" style="margin: auto auto;"}
+
+::: aside
+Learn more at [tidyverse.org](https://www.tidyverse.org)
+:::
+
+## `📦dplyr` {background-color="#1a162d" .smaller .scrollable}
+
+::: footer
+tidyverse
+:::
+
+::: {.fragment .semi-fade-out fragment-index=1}
+
+> A grammar of data manipulation
+
+```{webr}
+iris |> 
+  dplyr::select(Species, Sepal.Length) |> 
+  dplyr::group_by(Species) |>
+  dplyr::mutate(Sepal.Length.relative = Sepal.Length / mean(Sepal.Length))
+```
+
+::: {style="padding-left: 2em; font-size: .6em;"}
+{{< fa solid circle-info >}}  `📦dplyr` is an acceptable exception to the practice of prefixing function calls with package name.
+:::
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=1}
+
+::: {style="margin-top: 30px;"}
+:::
+
+Manual approach
+
+```{webr}
+Reduce(
+  function(u, v) {
+    sp_l <- iris$Sepal.Length[iris$Species == v] |> mean()
+    rbind(
+      u,
+      cbind(
+        iris[iris$Species == v, c("Species", "Sepal.Length")],
+        Sepal.Length.relative = iris$Sepal.Length[iris$Species == v] / sp_l
+      )
+    )
+  },
+  c("setosa", "versicolor", "virginica"),
+  init = data.frame()
+) |> dplyr::tibble()
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+
+::: {style="margin-top: 30px;"}
+:::
+
+The same with `stats::ave()`
+
+```{webr}
+iris_ave <- iris[, c("Species", "Sepal.Length")]
+iris_ave$Sepal.Length.relative <- iris$Sepal.Length / ave(iris$Sepal.Length, iris$Species, FUN = mean)
+dplyr::tibble(iris_ave)
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+
+::: {style="margin-top: 30px;"}
+:::
+
+The same in data.tables
+
+```{webr}
+library(data.table)
+iris_dt <- as.data.table(iris[, c("Species", "Sepal.Length")] )
+iris_dt[, Sepal.Length.relative := Sepal.Length / mean(Sepal.Length), by = Species] |> 
+  dplyr::tibble()
+```
+
+:::
+
+## `📦tidyr` {background-color="#1a162d" .smaller}
+
+::: footer
+tidyverse
+:::
+
+::::: columns
+::: {.column width="50%"}
+
+Original data
+
+```{r echo=TRUE}
+#
+#
+#
+#
+tidyr::relig_income |> 
+  print(width = 50, n = 10)
+```
+:::
+
+::: {.column width="50%"}
+
+`tidyr::pivot_longer()`
+
+```{r echo=TRUE}
+tidyr::relig_income |>
+  tidyr::pivot_longer(
+    !religion, 
+    names_to = "income",  
+    values_to = "count"
+  )
+```
+
+:::
+:::::
+
+## `📦tidyr` {background-color="#1a162d" .smaller}
+
+::: footer
+tidyverse
+:::
+
+::::: columns
+::: {.column width="30%"}
+
+Original data
+
+```{r echo=TRUE}
+#
+#
+tidyr::fish_encounters
+```
+
+:::
+
+::: {.column width="70%"}
+
+`tidyr::pivot_wider()`
+
+```{r echo=TRUE}
+tidyr::fish_encounters |> 
+  tidyr::pivot_wider(names_from = station, values_from = seen) |>
+  print(width = 60, n = 10)
+```
+
+:::
+:::::
+
+
+## `📦purrr` {background-color="#1a162d" .smaller}
+
+::: footer
+tidyverse
+:::
+
+::: {.fragment .semi-fade-out fragment-index=1}
+
+```{r purrr1, echo=TRUE, cache=TRUE}
+purrr::pluck(list(a = list(b = 2)), "a", "b")
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=1}
+
+```{r purrr2, echo=TRUE, cache=TRUE}
+purrr::pluck(list(c = 3), "foo")
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=2}
+
+```{r purrr3, echo=TRUE, cache=TRUE}
+purrr::pluck(list(c = 3), "foo", .default = 0)
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=3}
+
+```{r purrr4, echo=TRUE, cache=TRUE}
+purrr::keep(1:10, ~.x < 5) # keep values below 5
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=4}
+
+```{r purrr5, echo=TRUE, cache=TRUE}
+purrr::discard(1:10, ~.x >= 5) # discard values above 5
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=5}
+
+```{r purrr6, echo=TRUE, cache=TRUE}
+list(1, 2, 3, NULL, 4, NULL) |> paste(collapse = ", ")
+purrr::compact(list(1, 2, 3, NULL, 4, NULL)) |> paste(collapse = ", ") # remove NULL values
+```
+
+:::
+
+## `📦glue` {background-color="#1a162d" .smaller}
+
+::: footer
+tidyverse
+:::
+
+::: aside
+{{< fa solid circle-info >}} when going for efficient code, use `sprintf()`  
+Can be used with `dplyr::mutate()` as well as other tidyverse packages
+:::
+
+> Easy function to generate strings
+
+`glue()` has access to the environment and can evaluate expressions
+
+```{r echo=TRUE}
+title <- "Code in R like a rockstar 🎸"
+glue::glue("The current time is {Sys.time()}\n  and the title of this presentation is: '{title}'")
+```
+
+
+::: {style="margin-top: 50px;"}
+:::
+
+Data can come from other sources, such as a _dataframe_ _(a list or an environment)_
+
+```{r echo=TRUE}
+head(mtcars, n = 3) |>
+  tibble::rownames_to_column(var = "model") |> 
+  glue::glue_data("{model} has {hp} hp.")
+```
+
+
+## `📦ggplot2` (source [gist](https://gist.github.com/averissimo/8804d3ffed0613f9f912c4ef3465fbc1))  {background-color="#1a162d" .smaller}
+
+![](figures/electricity.png){.absolute left=0 right=0 top=40 style="margin: auto auto; }
+
+## `📦ggplot2` {background-color="#1a162d"}
+
+![](figures/electricity.png){.absolute left=0 right=0 top=0 style="margin: auto auto; scale: 1.5; transform: scale(1.25, 1.25) translate(0, 18%);"}
+
+
+# `📦memoise` {.smaller .scrollable}
+
+> Memoisation is an **[optimization technique to speed up computer programs by storing the results of expensive function calls]{.highlight}** and returning the cached result when the same inputs occur again
+
+```{webr}
+#| autorun: true
+foo <- function(x) {
+  Sys.sleep(1) # Simulate a long calculation
+  x^2
+}
+
+cache <- cachem::cache_disk("memoise")          # Keep persistent cache
+foo_mem <- memoise::memoise(foo, cache = cache) # Memoise the function
+
+tic <- tictoc::tic()
+result <- Reduce(
+  \(u, v) u + foo_mem(v),
+  init = 0,
+  x = 1:10
+)
+tictoc::toc()
+```
+
+## `📦memoise` {.scrollable}
+
+::: {.smaller2}
+
+- Let's:
+    - [**Build lung survival data**]{.highlight}
+    - Train model on 80% of the data
+    - Test on the remaining 20%
+    - Run logrank test and calculate `p_value`
+- Repeat 100
+
+::: {style="margin-top: 30px;"}
+:::
+
+```{.r}
+# Auxiliary function to generate x and y from a split
+gen_x_y <- \(fun, split, dat = fun(split)) list(
+  x = model.matrix(surv_obj ~ age + sex + ph_ecog + wt_loss, data = dat)[, -1],
+  y = dat$surv_obj
+)
+
+cache <- cachem::cache_disk("cache") # Use local disk cache (tweak `max_size` for your needs)
+
+#
+# Build data
+lung <- na.omit(survival::lung) |>
+  dplyr::mutate(
+    .keep = "none",
+    surv_obj = survival::Surv(time, status == 2),
+    event = status == 2, age, sex = factor(sex), ph_ecog = factor(ph.ecog),
+    wt_loss = wt.loss
+  )
+  
+cv_model <- memoise::memoise(glmnet::cv.glmnet)
+```
+
+:::
+
+## `📦memoise` {.smaller .scrollable}
+
+- Let's:
+    - Build lung survival data
+    - [**Train model on 80% of the data**]{.highlight}
+    - Test on the remaining 20%
+    - Run logrank test and calculate `p_value`
+- Repeat 100
+
+::: {style="margin-top: 30px;"}
+:::
+
+```{.r}
+split <- rsample::initial_split(lung, prop = 0.8, strata = "event")
+lung_train <- gen_x_y(rsample::training, split)
+cvfit <- cv_model(lung_train$x, lung_train$y, family = "cox") # fit model
+```
+
+
+## `📦memoise` {.scrollable .smaller}
+
+- Let's:
+    - Build lung survival data
+    - Train model on 80% of the data
+    - [**Test on the remaining 20%**]{.highlight}
+    - Run logrank test and calculate `p_value`
+- Repeat 100
+
+::: {style="margin-top: 30px;"}
+:::
+
+```{.r code-line-numbers="1,2,4,5"}
+lung_test <- gen_x_y(rsample::testing, split)
+set.seed(seed * 42) # Just in case
+tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
+  cvfit |> 
+    stats::predict(newx = lung_test$x, s = "lambda.min", type = "link") |> 
+    dplyr::tibble(risk_score = _, y = lung_test$y) |> 
+    dplyr::mutate(risk_group = dplyr::if_else(risk_score > median(risk_score), "high", "low")) |> 
+    dplyr::select(-risk_score) |> 
+    survival::survdiff(y ~ risk_group, data = _) |> 
+    .subset2("pvalue"),
+  error = \(e) 1 # In case there is only 1 group
+)
+```
+
+## `📦memoise` {.scrollable .smaller}
+
+- Let's:
+    - Build lung survival data
+    - Train model on 80% of the data
+    - Test on the remaining 20%
+    - [**Run logrank test and calculate `p_value`**]{.highlight}
+- Repeat 100
+
+::: {style="margin-top: 30px;"}
+:::
+
+```{.r code-line-numbers="5-10"}
+lung_test <- gen_x_y(rsample::testing, split)
+set.seed(seed * 42) # Just in case
+tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
+  cvfit |> 
+    stats::predict(newx = lung_test$x, s = "lambda.min", type = "link") |> 
+    dplyr::tibble(risk_score = _, y = lung_test$y) |> 
+    dplyr::mutate(risk_group = dplyr::if_else(risk_score > median(risk_score), "high", "low")) |> 
+    dplyr::select(-risk_score) |> 
+    survival::survdiff(y ~ risk_group, data = _) |> 
+    purrr::pluck("pvalue"),
+  error = \(e) 1 # In case there is only 1 group
+)
+```
+
+## `📦memoise` {.scrollable .smaller}
+
+::: {.r-stack}
+
+::: {.fragment .semi-fade-out fragment-index=1 style="width: 100%"}
+
+- Let's:
+    - Build lung survival data
+    - Train model on 80% of the data
+    - Test on the remaining 20%
+    - Run logrank test and calculate `p_value`
+- [**Repeat 100**]{.highlight}
+
+::: {style="margin-top: 30px;"}
+:::
+
+```{.r}
+tictoc::tic(tic_str)
+p_values <- vapply(
+  seq_len(200),
+  \(seed) {
+    # code
+  },
+  numeric(1L)
+)
+tictoc::toc()
+```
+
+:::
+
+::: {.fragment fragment-index=1 style="background-color: black;"}
+
+```{.r}
+tictoc::tic(tic_str)
+p_values <- vapply(
+  seq_len(200),
+  \(seed) {
+    set.seed(seed)
+    # Split the data in 80% training / 20% testing
+    split <- rsample::initial_split(lung, prop = 0.8, strata = "event")
+    lung_train <- gen_x_y(rsample::training, split)
+    cvfit <- cv_model(lung_train$x, lung_train$y, family = "cox") # fit model
+    
+    lung_test <- gen_x_y(rsample::testing, split)
+    set.seed(seed * 42) # Just in case
+    tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
+      cvfit |> 
+        stats::predict(newx = lung_test$x, s = "lambda.min", type = "link") |> 
+        dplyr::tibble(risk_score = _, y = lung_test$y) |> 
+        dplyr::mutate(risk_group = dplyr::if_else(risk_score > median(risk_score), "high", "low")) |> 
+        dplyr::select(-risk_score) |> 
+        survival::survdiff(y ~ risk_group, data = _) |> 
+        purrr::pluck("pvalue"),
+      error = \(e) 1 # In case there is only 1 group
+    )
+  },
+  FUN.VALUE = double(1L)
+) |> 
+  sort() |> 
+  dplyr::tibble(p_value = _) |> 
+  dplyr::mutate(cdf = seq_along(p_value) / length(p_value))
+tictoc::toc()
+```
+
+
+:::
+
+:::
+
+## `📦memoise` {.scrollable}
+
+::: {.smaller2}
+
+- Example below will:
+    - Build lung survival data
+    - Train model on 80% of the data
+    - Test on the remaining 20%
+    - Run logrank test and calculate `p_value`
+- Repeat 100
+- [**Plot results**]{.highlight}
+
+::: {style="margin-top: 30px;"}
+
+:::
+
+```{.r code-line-numbers="3-19"}
+#
+# Nice cumulative distribution plot
+p_values |>
+  dplyr::mutate(
+    max_significant = p_value == max(p_value[p_value <= 0.05]),
+    label = dplyr::if_else(max_significant, glue::glue("y = {cdf} / p_value = {round(p_value, 5)}"), NA_character_),
+    yintercept = dplyr::if_else(max_significant, cdf, NA),
+  ) |>
+  ggplot2::ggplot(ggplot2::aes(x = p_value, y = cdf, label = label)) +
+    ggplot2::geom_line(color = "blue") +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = 0, ymax = cdf), alpha = 0.1) +
+    ggplot2::geom_vline(xintercept = 0.05, linetype = "dashed", color = "red") +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = yintercept), na.rm = TRUE, linetype = "dashed", color = "gray") +
+    ggplot2::geom_label(nudge_x = .05, nudge_y = -.05, hjust = 0, na.rm = TRUE, fill = "white") +
+    ggplot2::labs(title = "Cumulative Distribution of p-values",
+         x = "p-value",
+         y = "Empirical CDF") +
+    ggplot2::expand_limits(x = c(0, 1), y = c(0, 1)) +
+    ggplot2::theme_minimal()
+```
+
+:::
+
+## `📦memoise` {.smaller}
+
+```{r memoise_model, cache=TRUE}
+# Auxiliary function to generate x and y from a split
+gen_x_y <- \(fun, split, dat = fun(split)) list(
+  x = model.matrix(surv_obj ~ age + sex + ph_ecog + wt_loss, data = dat)[, -1],
+  y = dat$surv_obj
+)
+
+cache <- cachem::cache_disk("cache") # Use local disk cache (tweak `max_size` for your needs)
+
+#
+# Build data
+lung <- na.omit(survival::lung) |>
+  dplyr::mutate(
+    .keep = "none",
+    surv_obj = survival::Surv(time, status == 2),
+    event = status == 2, age, sex = factor(sex), ph_ecog = factor(ph.ecog),
+    wt_loss = wt.loss
+  )
+
+#
+# Mode to use
+cv.glmnet_mem <- memoise::memoise(glmnet::cv.glmnet, cache = cache)
+
+#
+# Model fitting (Run 3 lines together to get elapsed time)
+run_model <- \(cv_model, tic_str){
+  tictoc::tic(tic_str)
+  p_values <- vapply(
+    seq_len(200),
+    \(seed) {
+      set.seed(seed)
+      # Split the data in 80% training / 20% testing
+      split <- rsample::initial_split(lung, prop = 0.8, strata = "event")
+      lung_train <- gen_x_y(rsample::training, split)
+      cvfit <- cv_model(lung_train$x, lung_train$y, family = "cox") # fit model
+      
+      lung_test <- gen_x_y(rsample::testing, split)
+      set.seed(seed * 42) # Just in case
+      tryCatch( # Logrank test and extract p-value (defaults to 1 if only 1 group
+        cvfit |> 
+          stats::predict(newx = lung_test$x, s = "lambda.min", type = "link") |> 
+          dplyr::tibble(risk_score = _, y = lung_test$y) |> 
+          dplyr::mutate(risk_group = dplyr::if_else(risk_score > median(risk_score), "high", "low")) |> 
+          dplyr::select(-risk_score) |> 
+          survival::survdiff(y ~ risk_group, data = _) |> 
+          purrr::pluck("pvalue"),
+        error = \(e) 1 # In case there is only 1 group
+      )
+    },
+    FUN.VALUE = double(1L)
+  ) |> 
+    sort() |> 
+    dplyr::tibble(p_value = _) |> 
+    dplyr::mutate(cdf = seq_along(p_value) / length(p_value))
+  tictoc::toc()
+  invisible(p_values)
+}
+
+run_model(glmnet::cv.glmnet, "full run")
+p_values <- run_model(cv.glmnet_mem, "memoise run")
+```
+
+```{r}
+p_values |>
+  dplyr::mutate(
+    max_significant = p_value == max(p_value[p_value <= 0.05]),
+    label = dplyr::if_else(max_significant, glue::glue("y = {cdf} / p_value = {round(p_value, 5)}"), NA_character_),
+    yintercept = dplyr::if_else(max_significant, cdf, NA),
+  ) |>
+  ggplot2::ggplot(ggplot2::aes(x = p_value, y = cdf, label = label)) +
+    ggplot2::geom_line(color = "blue") +
+    ggplot2::geom_ribbon(ggplot2::aes(ymin = 0, ymax = cdf), alpha = 0.1) +
+    ggplot2::geom_vline(xintercept = 0.05, linetype = "dashed", color = "red") +
+    ggplot2::geom_hline(ggplot2::aes(yintercept = yintercept), na.rm = TRUE, linetype = "dashed", color = "gray") +
+    ggplot2::geom_label(nudge_x = .05, nudge_y = -.05, hjust = 0, na.rm = TRUE, fill = "white") +
+    ggplot2::labs(title = "Cumulative Distribution of p-values",
+         x = "p-value",
+         y = "Empirical CDF") +
+    ggplot2::expand_limits(x = c(0, 1), y = c(0, 1)) +
+    ggplot2::theme_minimal()
+```
+
+# Rmarkdown & Quarto {background-color="#152330"}
+
+## Powerful reports & presentations  {.smaller auto-animate="true" background-color="#152330"}
+
+- Great tools to communicate results
+- You can use it to generate reproducible results
+    - `params:` property in rmarkdown title
+    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
+
+## Powerful reports & presentations  {.smaller auto-animate="true" background-color="#152330"}
+
+- Great tools to communicate results
+- You can use it to generate reproducible results
+    - `params:` property in rmarkdown title
+    ```{.r code-line-numbers="4-7"}
+    ---
+    title: "Network-based models"
+    output: html_document
+    params:
+      seed: 2024
+      prop: 0.8
+      folds: 10
+      # ...
+    ---
+    
+    # then use `params$<name> in code
+    set.seed(params$seed)
+    ```
+    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
+
+## Powerful reports & presentations {.smaller auto-animate="true" background-color="#152330"}
+
+- Great tools to communicate results
+- You can use it to generate reproducible results
+    - `params:` property in rmarkdown title
+    - `rmarkdown::render()` {{< fa solid hat-wizard >}}
+    ```r
+    props <- c(.8, .7)
+    folds <- c(10, 5)
+    seed <- 2025 + seq_len(10)
+      
+    dir.create("Results/reports", showWarnings = FALSE)
+    purrr::walk(seed, \(s)
+      purrr::walk(props, \(x) 
+        purrr::walk(folds, \(y) 
+          rmarkdown::render(
+            "network.Rmd", 
+            output_file = glue::glue("Results/reports/network_{s}_{x}_{y}.html"), 
+            params = list(props = x, folds = y, seed = s))
+        )
+      )
+    )
+    ```
+
+## Powerful reports & presentations  {.smaller  background-color="#152330"}
+
+Add to the end of an Rmarkdown:
+
+```{.r code-line-numbers="2-7,9-11,13"}
+## Add to end of chunk
+list(results = list()) |> as.environment()            # Boilerplate
+results_path <- here::here("results_rmarkdown.RData") # Path to save
+if (file.exists(results_path)) load(results_path, envir = env) # Load if exists
+
+env$results[[length(env$results) + 1]] <- list( # Add new result
+  params = params,   # Params from rmarkdown
+  date= Sys.time()   # Current time (in case you want to filter)
+  result = a_result, # A result
+  model = a_model    # Any other objects you want to save
+)
+
+save("results", file = results_path, envir = env)
+```
+
+
+
+# 💣 Don't `source` files {background-color="#6877a1" .smaller}
+
+- Difficult to maintain
+- Code runs inside scripts without any control
+- Should only be used to store functions
+    - There are better alternatives
+
+. . .
+
+::: {style="margin-top: 50px;"}
+:::
+
+**[If you really need]{.highlight}**, use relative paths:
+
+  - `here::here("./another.R")` _(in current directory)_
+  - `here::here("../something.R")` _(in parent directory)_
+  - _or_ `here::here("./folder/to/script.R")` _(in one of the folders)_
+
+## Alternatives to `source()` {background-color="#6877a1" .smaller}
+
+::: {.fragment .semi-fade-out fragment-index=1}
+
+`📦box` is a package that allows to import functions from other scripts
+
+- it encapsulates the code in separate environments
+
+```r
+#' @export
+fun <- function(a, b) a + b
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out fragment-index=1}
+
+- Kinda like `source(...)` but it doesn't run anything in the current environment
+
+```r
+box::use(mod/another[...])
+
+fun(1, 2)
+```
+
+:::
+
+
+::: {.fragment .fade-in-then-semi-out}
+
+- The file can be loaded and then used with its name
+`<filename>$<fun_name>`
+
+```r
+box::use(mod/another)
+
+another$fun(1, 2)
+```
+
+:::
+
+::: {.fragment .fade-in-then-semi-out}
+
+- We can only import some functions
+
+
+```r
+box::use(mod/another[fun])
+
+fun(1, 2)
+```
+
+:::
+
+## Alternatives to `source()` {background-color="#6877a1" .smaller}
+
+The real power comes from the restricted scope it can operate in.
+
+
+```{r, echo=TRUE, message=TRUE, error=TRUE}
+#| code-line-numbers: "2,4,6-7"
+# 📄 mod/another.R
+a_variable <- 1
+
+#' @export
+log <- function (msg) {
+  box::use(glue[glue])
+  # We can now use `glue` inside the function:
+  message(glue(.sep = " ", "[LOG MESSAGE]", msg, .envir = parent.frame()))
+}
+```
+
+`a_variable` is [**not overwritten**]{.highlight}
+
+```{r, echo=TRUE, message=TRUE, error=TRUE}
+#| code-line-numbers: "2-4"
+# 📄 report.Rmd
+a_variable <- 2
+box::use(mod/another)
+another$log("a_variable has value: {a_variable}")
+```
+
+While with `source()` it is
+
+```{r echo=TRUE, message=TRUE, error=TRUE}
+#| code-line-numbers: "2-4"
+# 📄 report.Rmd
+a_variable <- 2
+source("mod/another.R")
+another$log("a_variable has value: {a_variable}")
+```
+
+## Alternatives to `source()` {background-color="#6877a1" .smaller}
+
+::: {style="margin-top: 50px;"}
+:::
+[**Create your own R package**]{.highlight}
+
+&nbsp; _(let's try a live demo if we have time)_
+
+# Thanks!
+
+::: aside
+[_Take some cool Appsilon's package stickers with you_]{.highlight-soft}
+:::
