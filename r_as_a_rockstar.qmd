@@ -56,7 +56,7 @@ format:
 :::::: {style="text-align: center;"}
 ::: {style="margin-top: 100px"}
 Learn some tricks and [**best practices**]{.highlight}\
-[**in {{**<fa brands r-project >}} development]{.highlight}
+[**in {{<fa brands r-project >}} development**]{.highlight}
 :::
 
 ::: {style="margin-top: 50px;"}
