@@ -1253,6 +1253,31 @@ save("results", file = results_path, envir = env)
 -   `here::here("../something.R")` *(in parent directory)*
 -   *or* `here::here("./folder/to/script.R")` *(in one of the folders)*
 
+## Alternatives to `source()` {.smaller2 background-color="#6877a1"}
+
+::: {style="margin-top: 50px;"}
+:::
+
+[**Create your own R package**]{.highlight}
+
+  *(let's try a live demo if we have time)*
+
+1. Open RStudio
+1. Start a new project
+1. Select "R Package"
+    - Click on `renv` and `git` options to initialize them for you
+1. Install "devtools" and "rmarkdown" `renv::install("devtools", "rmarkdown")`
+1. Create a new RMarkdown file (`.Rmd`)
+1. Add `devtools::load_all()` to chunk on top of `Rmd`
+    - This loads all files in `R/` folder
+1. Add `hello()` to a chunk to test existing boilerplate function
+
+Congratulations you have an R Package for your own project
+
+::: aside
+{{< fa solid circle-info >}} Keep all your `Rmd` in the `vignettes/` folder.
+:::
+
 ## Alternatives to `source()` {.smaller background-color="#6877a1"}
 
 ::: {.fragment .semi-fade-out fragment-index="1"}
@@ -1332,31 +1357,6 @@ a_variable <- 2
 source("mod/another.R")
 another$log("a_variable has value: {a_variable}")
 ```
-
-## Alternatives to `source()` {.smaller2 background-color="#6877a1"}
-
-::: {style="margin-top: 50px;"}
-:::
-
-[**Create your own R package**]{.highlight}
-
-  *(let's try a live demo if we have time)*
-
-1. Open RStudio
-1. Start a new project
-1. Select "R Package"
-    - Click on `renv` and `git` options to initialize them for you
-1. Install "devtools" and "rmarkdown" `renv::install("devtools", "rmarkdown")`
-1. Create a new RMarkdown file (`.Rmd`)
-1. Add `devtools::load_all()` to chunk on top of `Rmd`
-    - This loads all files in `R/` folder
-1. Add `hello()` to a chunk to test existing boilerplate function
-
-Congratulations you have an R Package for your own project
-
-::: aside
-{{< fa solid circle-info >}} Keep all your `Rmd` in the `vignettes/` folder.
-:::
 
 # Thanks!
 
