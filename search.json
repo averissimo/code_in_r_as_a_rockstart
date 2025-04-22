@@ -165,7 +165,7 @@
     "href": "r_as_a_rockstar.html#glue",
     "title": "Code in R like a rockstar 🎸",
     "section": "📦glue",
-    "text": "📦glue\n\ntidyverse\n\n\n\nEasy function to generate strings\n\nglue() has access to the environment and can evaluate expressions\n\ntitle &lt;- \"Code in R like a rockstar 🎸\"\nglue::glue(\"The current time is {Sys.time()}\\n  and the title of this presentation is: '{title}'\")\n\nThe current time is 2025-04-22 16:06:05.648372\nand the title of this presentation is: 'Code in R like a rockstar 🎸'\n\n\n\n\n\nData can come from other sources, such as a dataframe (a list or an environment)\n\nhead(mtcars, n = 3) |&gt;\n  tibble::rownames_to_column(var = \"model\") |&gt; \n  glue::glue_data(\"{model} has {hp} hp.\")\n\nMazda RX4 has 110 hp.\nMazda RX4 Wag has 110 hp.\nDatsun 710 has 93 hp.\n\n\n\n when going for efficient code, use sprintf()\nCan be used with dplyr::mutate() as well as other tidyverse packages"
+    "text": "📦glue\n\ntidyverse\n\n\n\nEasy function to generate strings\n\nglue() has access to the environment and can evaluate expressions\n\ntitle &lt;- \"Code in R like a rockstar 🎸\"\nglue::glue(\"The current time is {Sys.time()}\\n  and the title of this presentation is: '{title}'\")\n\nThe current time is 2025-04-22 17:11:55.099358\nand the title of this presentation is: 'Code in R like a rockstar 🎸'\n\n\n\n\n\nData can come from other sources, such as a dataframe (a list or an environment)\n\nhead(mtcars, n = 3) |&gt;\n  tibble::rownames_to_column(var = \"model\") |&gt; \n  glue::glue_data(\"{model} has {hp} hp.\")\n\nMazda RX4 has 110 hp.\nMazda RX4 Wag has 110 hp.\nDatsun 710 has 93 hp.\n\n\n\n when going for efficient code, use sprintf()\nCan be used with dplyr::mutate() as well as other tidyverse packages"
   },
   {
     "objectID": "r_as_a_rockstar.html#ggplot2-source-gist",
@@ -263,20 +263,20 @@
     "href": "r_as_a_rockstar.html#alternatives-to-source",
     "title": "Code in R like a rockstar 🎸",
     "section": "Alternatives to source()",
-    "text": "Alternatives to source()\n\n📦box is a package that allows to import functions from other scripts\n\nit encapsulates the code in separate environments\n\n#' @export\nfun &lt;- function(a, b) a + b\n\n\n\nKinda like source(...) but it doesn’t run anything in the current environment\n\nbox::use(mod/another[...])\n\nfun(1, 2)\n\n\n\nThe file can be loaded and then used with its name &lt;filename&gt;$&lt;fun_name&gt;\n\nbox::use(mod/another)\n\nanother$fun(1, 2)\n\n\n\nWe can only import some functions\n\nbox::use(mod/another[fun])\n\nfun(1, 2)"
+    "text": "Alternatives to source()\n\n\n\nCreate your own R package\n  (let’s try a live demo if we have time)\n\nOpen RStudio\nStart a new project\nSelect “R Package”\n\nClick on renv and git options to initialize them for you\n\nInstall “devtools” and “rmarkdown” renv::install(\"devtools\", \"rmarkdown\")\nCreate a new RMarkdown file (.Rmd)\nAdd devtools::load_all() to chunk on top of Rmd\n\nThis loads all files in R/ folder\n\nAdd hello() to a chunk to test existing boilerplate function\n\nCongratulations you have an R Package for your own project\n\n\n Keep all your Rmd in the vignettes/ folder."
   },
   {
     "objectID": "r_as_a_rockstar.html#alternatives-to-source-1",
     "href": "r_as_a_rockstar.html#alternatives-to-source-1",
     "title": "Code in R like a rockstar 🎸",
     "section": "Alternatives to source()",
-    "text": "Alternatives to source()\nThe real power comes from the restricted scope it can operate in.\n\n# 📄 mod/another.R\na_variable &lt;- 1\n\n#' @export\nlog &lt;- function (msg) {\n  box::use(glue[glue])\n  # We can now use `glue` inside the function:\n  message(glue(.sep = \" \", \"[LOG MESSAGE]\", msg, .envir = parent.frame()))\n}\n\na_variable is not overwritten\n\n# 📄 report.Rmd\na_variable &lt;- 2\nbox::use(mod/another)\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 2\n\n\nWhile with source() it is\n\n# 📄 report.Rmd\na_variable &lt;- 2\nsource(\"mod/another.R\")\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 1"
+    "text": "Alternatives to source()\n\n📦box is a package that allows to import functions from other scripts\n\nit encapsulates the code in separate environments\n\n#' @export\nfun &lt;- function(a, b) a + b\n\n\n\nKinda like source(...) but it doesn’t run anything in the current environment\n\nbox::use(mod/another[...])\n\nfun(1, 2)\n\n\n\nThe file can be loaded and then used with its name &lt;filename&gt;$&lt;fun_name&gt;\n\nbox::use(mod/another)\n\nanother$fun(1, 2)\n\n\n\nWe can only import some functions\n\nbox::use(mod/another[fun])\n\nfun(1, 2)"
   },
   {
     "objectID": "r_as_a_rockstar.html#alternatives-to-source-2",
     "href": "r_as_a_rockstar.html#alternatives-to-source-2",
     "title": "Code in R like a rockstar 🎸",
     "section": "Alternatives to source()",
-    "text": "Alternatives to source()\n\n\n\nCreate your own R package\n  (let’s try a live demo if we have time)"
+    "text": "Alternatives to source()\nThe real power comes from the restricted scope it can operate in.\n\n# 📄 mod/another.R\na_variable &lt;- 1\n\n#' @export\nlog &lt;- function (msg) {\n  box::use(glue[glue])\n  # We can now use `glue` inside the function:\n  message(glue(.sep = \" \", \"[LOG MESSAGE]\", msg, .envir = parent.frame()))\n}\n\na_variable is not overwritten\n\n# 📄 report.Rmd\na_variable &lt;- 2\nbox::use(mod/another)\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 2\n\n\nWhile with source() it is\n\n# 📄 report.Rmd\na_variable &lt;- 2\nsource(\"mod/another.R\")\nanother$log(\"a_variable has value: {a_variable}\")\n\n[LOG MESSAGE] a_variable has value: 1"
   }
 ]

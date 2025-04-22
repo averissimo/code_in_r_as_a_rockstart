@@ -1061,7 +1061,7 @@ eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoibGlicmFyeShkYXRhLnRhYmxl
 <div class="sourceCode cell-code" id="cb59"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb59-1"><a></a>title <span class="ot">&lt;-</span> <span class="st">"Code in R like a rockstar 🎸"</span></span>
 <span id="cb59-2"><a></a>glue<span class="sc">::</span><span class="fu">glue</span>(<span class="st">"The current time is {Sys.time()}</span><span class="sc">\n</span><span class="st">  and the title of this presentation is: '{title}'"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>The current time is 2025-04-22 16:06:05.648372
+<pre><code>The current time is 2025-04-22 17:11:55.099358
 and the title of this presentation is: 'Code in R like a rockstar 🎸'</code></pre>
 </div>
 </div>
@@ -1437,7 +1437,34 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 </ul>
 </div>
 </section>
-<section id="alternatives-to-source" class="slide level2 smaller" data-background-color="#6877a1">
+<section id="alternatives-to-source" class="slide level2 smaller2" data-background-color="#6877a1">
+<h2>Alternatives to <code>source()</code></h2>
+<div style="margin-top: 50px;">
+
+</div>
+<p><span class="highlight"><strong>Create your own R package</strong></span></p>
+<p>&nbsp; <em>(let’s try a live demo if we have time)</em></p>
+<ol type="1">
+<li>Open RStudio</li>
+<li>Start a new project</li>
+<li>Select “R Package”
+<ul>
+<li>Click on <code>renv</code> and <code>git</code> options to initialize them for you</li>
+</ul></li>
+<li>Install “devtools” and “rmarkdown” <code>renv::install("devtools", "rmarkdown")</code></li>
+<li>Create a new RMarkdown file (<code>.Rmd</code>)</li>
+<li>Add <code>devtools::load_all()</code> to chunk on top of <code>Rmd</code>
+<ul>
+<li>This loads all files in <code>R/</code> folder</li>
+</ul></li>
+<li>Add <code>hello()</code> to a chunk to test existing boilerplate function</li>
+</ol>
+<p>Congratulations you have an R Package for your own project</p>
+
+<aside><div>
+<p><i class="fa-solid fa-circle-info" aria-label="circle-info"></i> Keep all your <code>Rmd</code> in the <code>vignettes/</code> folder.</p>
+</div></aside></section>
+<section id="alternatives-to-source-1" class="slide level2 smaller" data-background-color="#6877a1">
 <h2>Alternatives to <code>source()</code></h2>
 <div class="fragment semi-fade-out" data-fragment-index="1">
 <p><code>📦box</code> is a package that allows to import functions from other scripts</p>
@@ -1472,7 +1499,7 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 <span id="cb78-3"><a></a><span class="fu">fun</span>(<span class="dv">1</span>, <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
-<section id="alternatives-to-source-1" class="slide level2 smaller" data-background-color="#6877a1">
+<section id="alternatives-to-source-2" class="slide level2 smaller" data-background-color="#6877a1">
 <h2>Alternatives to <code>source()</code></h2>
 <p>The real power comes from the restricted scope it can operate in.</p>
 <div class="cell">
@@ -1506,14 +1533,6 @@ eyJhdHRyIjp7ImF1dG9ydW4iOnRydWUsImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZm9v
 <pre><code>[LOG MESSAGE] a_variable has value: 1</code></pre>
 </div>
 </div>
-</section>
-<section id="alternatives-to-source-2" class="slide level2 smaller" data-background-color="#6877a1">
-<h2>Alternatives to <code>source()</code></h2>
-<div style="margin-top: 50px;">
-
-</div>
-<p><span class="highlight"><strong>Create your own R package</strong></span></p>
-<p>&nbsp; <em>(let’s try a live demo if we have time)</em></p>
 </section></section>
 <section id="thanks" class="title-slide slide level1">
 <h1>Thanks!</h1>
